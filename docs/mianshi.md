@@ -111,7 +111,19 @@ function A() {
 
 ## 讲下你熟悉的ES6语法
 
+* Map 作用是生成一个新数组，遍历原数组，将每个元素拿出来做一些变换然后 append 到新的数组中。Map 有三个参数，分别是当前索引元素，索引，原数组
+* Reduce 作用是数组中的值组合起来，最终得到一个值
 * 
+## async 和 await
+* 首先：一个函数加上async之后，该函数就会返回一个 promise。可以把 async 看成将函数返回值使用 Promise.resolve() 包裹了下。
+* await 只能在 async 函数中使用
+
+优势在于处理 then 的调用链，能够更清晰准确的写出代码。缺点在于滥用 await 可能会导致性能问题，因为 await 会阻塞代码，也许之后的异步代码并不依赖于前者，但仍然需要等待前者完成，导致代码失去了并发性。
+
+## 为什么 0.1 + 0.2 != 0.3
+* 因为 JS 采用 IEEE 754 双精度版本（64位），并且只要采用 IEEE 754 的语言都有该问题。
+原生解决办法：`parseFloat((0.1 + 0.2).toFixed(10))`
+
 ## call,apply和bind方法
 都是用于改变函数运行时上下文。可借助它们实现继承；最终的返回值是你调用的方法的返回值。
 
@@ -128,6 +140,9 @@ function A() {
 
 
 ## 讲下 promise、有哪些优缺点
+Promise 是 ES6 新增的语法，解决了回调地狱的问题。
+
+可以把 Promise 看成一个状态机。初始是 pending 状态，可以通过函数 resolve 和 reject ，将状态转变为 resolved 或者 rejected 状态，状态一旦改变就不能再次变化。
 
 ## 手写一个 防抖和节流
 
@@ -158,6 +173,31 @@ const debounce = (func, wait = 50) => {
 
 
 ## 讲下 递归和冒泡
+
+## Event Loop
+
+* 微任务(micro task)包括 process.nextTick ，promise ，Object.observe ，MutationObserver
+* 宏任务(macro task)包括 script ， setTimeout ，setInterval ，setImmediate ，I/O ，UI rendering
+
+正确的一次 Event loop 顺序是这样的:
+1. 执行同步代码，这属于宏任务
+2. 执行栈为空，查询是否有微任务需要执行
+3. 执行所有微任务
+4. 必要的话渲染 UI
+5. 然后开始下一轮 Event loop，执行宏任务中的异步代码
+
+优化：通过上述的 Event loop 顺序可知，如果宏任务中的异步代码有大量的计算并且需要操作 DOM 的话，为了更快的 界面响应，我们可以把操作 DOM 放入微任务中。
+
+## 重绘（Repaint）和回流（Reflow）
+* 重绘：当页面节点需要改变样式而不影响布局的，比如 颜色、背景色会触发 重绘
+* 回流：当页面布局或者几何属性发生变化成为回流
+
+### 减少重绘和回流 提高性能
+* 使用 translate 替代 top
+* 不要使用 table 布局，可能很小的一个小改动会造成整个 table 的重新布局
+* 动画实现的速度的选择，动画速度越快，回流次数越多，也可以选择使用 requestAnimationFrame
+* CSS 选择符从右往左匹配查找，避免 DOM 深度过深
+
 
 
 
