@@ -21,14 +21,9 @@ Your browser does not support the audio element.
 ```
 
 Canvas: 画布，很强大很强大，值得研究。  画海报
-
 Main: 主要内容
 
-## 
-
-
 # css 相关
-
 ## css设计模式（公司做定制产品的）
 1. ooscss： 直译过来就是，结构和皮肤分离，容器和内容分离。
 2. SMACSS： Base（基础）、Layout（布局）、Module（模块）、State（状态）、Theme（主题） 
@@ -108,6 +103,12 @@ function A() {
 此时要么使用 lodash 的深拷贝函数。要么 百度一套合适的deepclone()。
 
 ## 请讲下 原型链
+1、每个函数都有 prototype(显式原型) 属性，属性值是一个普通的对象，除了 Function.prototype.bind()，该属性指向原型。
+2、所有的引用类型（数组、对象、函数）都有一个 _proto_ 属性(隐式原型属性），属性值是一个普通的对象
+3、_proto_ 属性值(隐式原型属性）指向它的构造函数的“prototype”属性值
+
+f.toString(),当这个对象没有这个属性的时候，去它自身的隐式原型中找，它自身的隐式原型就是它构造函数（Foo）的显式原型（Foo.prototype）但显式原型（Foo.prototype）中并没有 toString ;但显式原型（Foo.prototype）也是对象，也要在它的隐式原型中找，即在其构造函数 （Object ）的显式原型中去找 toString. 故要在 f._proto_(隐式原型）的._proto_(隐式原型）中找，如图所示，故输出 null
+
 
 ## 讲下你熟悉的ES6语法
 
@@ -198,17 +199,85 @@ const debounce = (func, wait = 50) => {
 * 动画实现的速度的选择，动画速度越快，回流次数越多，也可以选择使用 requestAnimationFrame
 * CSS 选择符从右往左匹配查找，避免 DOM 深度过深
 
+## 懒加载
+就是将不关键的资源延后加载
 
+原理：只加载可视区域，也可以是即将进入可视区域 内需要加载的东西。
+ 对于图片来说，先设置图片标签的 src 属性为一张占位图，将真实的图片资源放入一个自定义属性中，当进入自定义区域时，就将自定义属性替换为 src 属性，这样图片就会去下载资源，实现了图片懒加载。
 
+懒加载不仅可以用于图片，也可以使用在别的资源上。比如进入可视区域才开始播放视频等等。
+
+# MVVM 框架
+MVVM 由以下三个内容组成
+
+View：界面
+Model：数据模型
+ViewModel：作为桥梁负责沟通 View 和 Model
+在 JQuery 时期，如果需要刷新 UI 时，需要先取到对应的 DOM 再更新 UI，这样数据和业务的逻辑就和页面有强耦合。
+
+在 MVVM 中，UI 是通过数据驱动的，数据一旦改变就会相应的刷新对应的 UI，UI 如果改变，也会改变对应的数据。这种方式就可以在业务处理中只关心数据的流转，而无需直接和页面打交道。ViewModel 只关心数据和业务的处理，不关心 View 如何处理数据，在这种情况下，View 和 Model 都可以独立出来，任何一方改变了也不一定需要改变另一方，并且可以将一些可复用的逻辑放在一个 ViewModel 中，让多个 View 复用这个 ViewModel。
+
+在 MVVM 中，最核心的也就是数据双向绑定，例如 Angluar 的脏数据检测，Vue 中的数据劫持。
 
 # vue相关
 
 ## 从源码角度讲下 双向绑定
 
-## MVVM 框架
+主要是采用 数据劫持方式
+
+## proxy 为什么替代 object.defineProperty
+
+有两点不足：
+1. 只能对属性进行数据劫持，所以需要深度便利整个对象
+2. 对于数组不能监听到数据的变化
+
+虽然 Vue 中确实能检测到数组数据的变化，但是其实是使用了 hack 的办法，并且也是有缺陷的。
+```js
+// hack 以下几个函数
+const methodsToPatch = [
+  'push',
+  'pop',
+  'shift',
+  'unshift',
+  'splice',
+  'sort',
+  'reverse'
+]
+```
+## Virtual Dom
+Virtual Dom diff算法的实现也就是以下三步
+
+1. 通过 JS 来模拟创建 DOM 对象
+2. 判断两个对象的差异
+3. 渲染差异
+
+## 生命周期分析
+在初始化时init会调用一下代码，生命周期都是通过`callHook`调用的。
+```js
+Vue.prototype._init = function(options) {
+  initLifecycle(vm)
+  initEvents(vm)
+  initRender(vm)
+  callHook(vm, 'beforeCreate') // 拿不到 props data
+  initInjections(vm)
+  initState(vm)
+  initProvide(vm)
+  callHook(vm, 'created')
+}
+```
+由此可以发现beforeCreate 调用的时候，是获取不到 props 或者 data 中的数据的，因为这些数据的初始化都在 initState 中。
 
 # webpack
 
+## 使用 Webpack 优化项目
+* 对于 Webpack4，打包项目使用 production 模式，这样会自动开启代码压缩
+* 使用 ES6 模块来开启 tree shaking，这个技术可以移除没有使用的代码
+* 优化图片，对于小图可以使用 base64 的方式写入文件中
+* 按照路由拆分代码，实现按需加载
+* 给打包出来的文件名添加哈希，实现浏览器缓存文件
+
+
+# 监控
 ## loder
 
 ## pulgin
@@ -216,5 +285,16 @@ const debounce = (func, wait = 50) => {
 # HTTP
 
 ## 从浏览器输入url开始经历了哪些过程
+
+1. 首先做 DNS 查询，如果这一步做了智能 DNS 解析的话，会提供访问速度最快的 IP 地址回来
+2. 接下来是 TCP 握手，应用层会下发数据给传输层，这里 TCP 协议会指明两端的端口号，然后下发给网络层。网络层中的 IP 协议会确定 IP 地址，并且指示了数据传输中如何跳转路由器。然后包会再被封装到数据链路层的数据帧结构中，最后就是物理层面的传输了
+3. TCP 握手结束后会进行 TLS 握手，然后就开始正式的传输数据
+4. 数据在进入服务端之前，可能还会先经过负责负载均衡的服务器，它的作用就是将请求合理的分发到多台服务器上，这时假设服务端会响应一个 HTML 文件
+5. 首先浏览器会判断状态码是什么，如果是 200 那就继续解析，如果 400 或 500 的话就会报错，如果 300 的话会进行重定向，这里会有个重定向计数器，避免过多次的重定向，超过次数也会报错
+6. 浏览器开始解析文件，如果是 gzip 格式的话会先解压一下，然后通过文件的编码格式知道该如何去解码文件
+7. 文件解码成功后会正式开始渲染流程，先会根据 HTML 构建 DOM 树，有 CSS 的话会去构建 CSSOM 树。如果遇到 script 标签的话，会判断是否存在 async 或者 defer ，前者会并行进行下载并执行 JS，后者会先下载文件，然后等待 HTML 解析完成后顺序执行，如果以上都没有，就会阻塞住渲染流程直到 JS 执行完毕。遇到文件下载的会去下载文件，这里如果使用 HTTP 2.0 协议的话会极大的提高多图的下载效率。
+8. 初始的 HTML 被完全加载和解析后会触发 DOMContentLoaded 事件
+9. CSSOM 树和 DOM 树构建完成后会开始生成 Render 树，这一步就是确定页面元素的布局、样式等等诸多方面的东西
+10. 在生成 Render 树的过程中，浏览器就开始调用 GPU 绘制，合成图层，将内容显示在屏幕上了
 
 # nood.js
