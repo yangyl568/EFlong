@@ -1,12 +1,40 @@
 module.exports = {
     title: '这是我的记录网站',
     description: 'Just playing around',
+    head: [
+        ['link', {
+            rel: 'icon',
+            href: './../public/imgs/read.jpeg'
+        }]
+    ],
+    host: '127.0.0.1',
+    port: '8080',
     themeConfig: {
-        nav: [
-            { text: '知识点', link: '/' },
-            { text: '必备技能~', link: '/bibeiskill' },
-            { text: '扩展', link: '/kuozhan' },
-            { text: '报错信息', link: '/error' }
+        lastUpdated: 'Last Updated', // string | boolean
+        sidebar: 'auto',
+        nav: [{
+                text: '知识点',
+                link: '/'
+            },
+            {
+                text: '必备技能~',
+                link: '/bibeiskill'
+            },
+            {
+                text: '扩展',
+                link: '/kuozhan'
+            },
+            {
+                text: '报错信息',
+                link: '/error'
+            },
+            {
+                text: 'Languages',
+                items: [
+                    { text: 'Chinese', link: '/language/chinese' },
+                    { text: 'Japanese', link: '/language/japanese' }
+                ]
+            }
         ],
         // sidebar: {
         //     '/': [
