@@ -8,13 +8,15 @@ module.exports = {
         }]
     ],
     host: '127.0.0.1',
-    port: '8080',
+    port: '8888',
     themeConfig: {
         lastUpdated: 'Last Updated', // string | boolean
         sidebar: 'auto',
         nav: [{
                 text: '知识点',
-                link: '/'
+                items: [
+                    { text: 'vue性能优化', link: '/vueyouhua' }
+                ]
             },
             {
                 text: '必备技能~',
@@ -36,14 +38,12 @@ module.exports = {
                 ]
             }
         ],
-        // sidebar: {
-        //     '/': [
-        //         "/", //指的是根目录的md文件 也就是 README.md 里面的内容
-        //         "mianshi", //根目录创建 mianshi.md文件
-        //         "kuozhan", //根目录创建 kuozhan.md文件
-        //         "error" //根目录创建 error.md文件
-        //     ]
-        // },
+        // sidebar: [
+        //     "/", //指的是根目录的md文件 也就是 README.md 里面的内容
+        //     "/bibeiskill", //根目录创建 mianshi.md文件
+        //     "/kuozhan", //根目录创建 kuozhan.md文件
+        //     "/error" //根目录创建 error.md文件
+        // ],
         sidebarDepth: 2
     }
 }

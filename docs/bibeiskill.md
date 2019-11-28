@@ -50,7 +50,9 @@ Main: 主要内容
 
 7. CSS3 媒体查询 @media
 
-8. 
+8. calc() 此CSS函数让你在声明CSS属性值时执行一些计算 
+* `width: calc(100% - 80px);`: 元素设置一个左右40px的间距
+
 
 ## 布局
 [多看看这个](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)
