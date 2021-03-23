@@ -3,6 +3,7 @@
 > 原创自：https://juejin.im/post/5d548b83f265da03ab42471d
 
 ## 一、代码层面的优化
+
 > v-for 遍历必须为 item 添加 key，且避免同时使用 v-if
 
 方便 Vue.js 内部机制精准找到该条列表数据。当 state 更新时，新的状态值和旧的状态值对比，较快地定位到 diff 。
@@ -18,6 +19,7 @@ this.users = Object.freeze(users);
 > 事件的销毁
 
 如果在 js 内使用 addEventListene 等方式是不会自动销毁的，我们需要在组件销毁时手动移除这些事件的监听，以免造成内存泄露，如：
+
 ```js
 created() {
   addEventListener('click', this.click, false)
@@ -154,5 +156,3 @@ Chrome 的 Performance 面板可以录制一段时间内的 js 执行细节及�
 2. 点击 Record 开始录制
 3. 刷新页面或展开某个节点
 4. 点击 Stop 停止录制
-
-
