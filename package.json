@@ -1,6 +1,14 @@
 {
+  "name": "vuepress-long",
+  "version": "1.0.0",
+  "description": "逍遥生日常前端笔记",
+  "main": "index.js",
   "scripts": {
     "docs:dev": "vuepress dev docs",
+    "docs:dev:no-cache": "vuepress dev docs --no-cache",
     "docs:build": "vuepress build docs"
-  }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

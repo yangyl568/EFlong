@@ -1,25 +1,36 @@
 module.exports = {
-    title: '这是我的记录网站',
-    description: 'Just playing around',
+    title: '逍遥生-笔记o-o',
+    description: '前端知识点、前端面试整理、前端积累',
     head: [
         ['link', {
             rel: 'icon',
-            href: './../public/imgs/read.jpeg'
+            href: '/imgs/favicon.ico'
         }]
     ],
     host: '127.0.0.1',
     port: '8888',
+    extraWatchFiles: [
+        // '.vuepress/config.js' // 指定额外的需要被监听的文件。
+    ],
     themeConfig: {
         lastUpdated: 'Last Updated', // string | boolean
         sidebar: 'auto',
-        nav: [{
-                text: '知识点',
+        nav: [
+            {
+                text: '首页', link: '/'
+            },
+            {
+                text: '前端知识点',
                 items: [
-                    { text: 'vue性能优化', link: '/vueyouhua' }
+                    { text: 'css 关键', link: '/css' },
+                    { text: 'javascript', link: '/javascript' },
+                    { text: '前端工程化', link: '/engineering' },
+                    { text: '框架', link: '/frame' },
+                    { text: 'Node', link: '/node' },
                 ]
             },
             {
-                text: '必备技能~',
+                text: '笔试题~',
                 link: '/bibeiskill'
             },
             {
@@ -27,15 +38,8 @@ module.exports = {
                 link: '/kuozhan'
             },
             {
-                text: '报错信息',
+                text: '问题收集',
                 link: '/error'
-            },
-            {
-                text: 'Languages',
-                items: [
-                    { text: 'Chinese', link: '/language/chinese' },
-                    { text: 'Japanese', link: '/language/japanese' }
-                ]
             }
         ],
         // sidebar: [
