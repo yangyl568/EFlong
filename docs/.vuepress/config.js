@@ -7,7 +7,7 @@ module.exports = {
             href: '/imgs/favicon.ico'
         }]
     ],
-    base: 'EFlong.github.io',
+    base: '/EFlong.github.io',
     host: '127.0.0.1',
     port: '8888',
     extraWatchFiles: [
