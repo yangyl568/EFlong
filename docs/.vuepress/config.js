@@ -4,10 +4,10 @@ module.exports = {
     head: [
         ['link', {
             rel: 'icon',
-            href: '/imgs/favicon.ico'
+            href: 'favicon.png'
         }]
     ],
-    base: '/EFlong.github.io',
+    base: '/EFlong.github.io/',
     host: '127.0.0.1',
     port: '8888',
     extraWatchFiles: [
@@ -50,5 +50,6 @@ module.exports = {
         //     "/error" //根目录创建 error.md文件
         // ],
         sidebarDepth: 2
-    }
+    },
+    plugins: ['@vuepress/back-to-top', '@vuepress/nprogress']
 }
