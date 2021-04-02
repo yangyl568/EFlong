@@ -29,15 +29,15 @@ symbol: 生成一个全局唯一的值，Symbol(1) !== Symbol(1)
 （1）**值类型(基本类型)**：数值 (number)、布尔值 (boolean)、string (在赋值传递中会以引用类型的方式来处理)、null、undefined。
 （2）**引用类型**：对象、数组、函数。
 
-# 执行上下文
+## 执行上下文
 
-当函数执行时，去创建一个称为「执行上下文( execution contex )」的环境，分为  **创建和执行** 两个阶段
+当函数执行时，去创建一个称为「执行上下文( execution contex )」的环境，分为  **创建、执行和回收三个阶段。**
 
 **作⽤域是在函数执⾏上下⽂创建时定义好的**，不是函数执⾏时定义的
 
 ## 创建阶段
 
-是指 **函数被调用但未被执行任何代码时**，此时创建了一个拥有 **3 个属性的对象。（出现 var 变量提升）**
+是指**函数被调用但未被执行任何代码时，**创建了一个拥有 **3 个属性的对象（出现 var 变量提升、函数声明提升）**
 
 ```javascript
 executionContext = {
@@ -47,7 +47,7 @@ executionContext = {
 };
 ```
 
-创建阶段
+创建阶段： 函数声明比变量声明优先级高
 
 ## 代码执行阶段
 
@@ -115,7 +115,7 @@ executionContext = {
 
 在栈内存中实际上保存的是对象的引用地址，通过引用地址可以快速查找到堆内存中的对象。**因此赋值过程其实是指向同一个地址，会相互影响。**
 
-# 函数的四种形态
+## 函数的四种形态
 
 只有**声明形态的函数，才具有变量提升的特性**。(所谓**提升**：意思就是代码的执行顺序提升到最前面)
 
@@ -157,18 +157,18 @@ func2();
 func4()(); // 闭包
 ```
 
-# 作用域( Scope )
+## 作用域( Scope )
 
 js 中有三种：**全局作用域、函数作用域**，es6 中又增加了 **块级作用域**。
 作用域最大的用途就是 **隔离变量或函数**，并**控制他们的生命周期**。
 **作用域是**在函数执行上下文**创建时定义好的**，**不是**函数执行时定义的。（**执行时根据定义时的关系向外层寻找**）
 
-## 作用域链
+### 作用域链
 
 当一个**块或函数**嵌套在另一个块或函数中时，就发生了作用域的嵌套。
 如果在**当前作用域无法找到会向上一级作用域寻找，直到找到或抵达全局作用域**，这样的链式关系就是 作用域链( Scope Chain )
 
-# 闭包
+## 闭包
 
 > **函数内层的作用域访问它外层函数作用域里的【参数/变量/函数】时，闭包就产生了**
 
@@ -229,80 +229,59 @@ for (var i = 1; i <= 5; i++) {
 JS 垃圾回收(GC): 如果对象不再被引用，或者对象互相引用形成孤岛后且没有被孤岛之外的其他对象引用，就会被 JS 引擎的垃圾回收器回收。
 **过度使用闭包，会导致内存占用过多，不会被回收，甚至内存泄漏。**
 
-# this 的 5 种场景
+## this 的 5 种场景
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1612784671512-88b72d2f-14d3-4f58-98eb-89c44f79bf20.png#align=left&display=inline&height=408&margin=%5Bobject%20Object%5D&name=image.png&originHeight=816&originWidth=1490&size=301110&status=done&style=none&width=745)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1612784671512-88b72d2f-14d3-4f58-98eb-89c44f79bf20.png#align=left&display=inline&height=408&margin=%5Bobject%20Object%5D&name=image.png&originHeight=816&originWidth=1490&size=301110&status=done&style=none&width=745#align=left&display=inline&height=816&margin=%5Bobject%20Object%5D&originHeight=816&originWidth=1490&status=done&style=none&width=1490)
+this 的值是在执行的时候才能确认，定义的时候不能确认！
 
-### 1、函数直接调用时
+### 场景区分
 
 ```javascript
-function myfunc() {
-  console.log(this); // this是widow
+// 1、直接调用
+function foo() {
+  console.log(this.a); // 直接调用函数 this 指向 window => this.a = 1
 }
 var a = 1;
-myfunc();
+foo();
 
-// 常考点
-function show() {
-  console.log("this:", this); // this是window
-}
-var obj = {
-  show: function () {
-    show(); // 函数被直接调用了
-  },
-};
-obj.show();
-```
-
-### 2、函数被别人调用(赋值给别人使用)
-
-```javascript
-function myfunc() {
-  console.log(this); // this是对象a
-}
-var a = { myfunc: myfunc };
-a.myfunc();
-```
-
-### 3、new 实例化一个构造函数
-
-```javascript
-function Penson(name) {
-  this.name = name;
-  console.log(this); // this是实例p
-}
-var p = new Penson("this:::");
-```
-
-### 4、apply、call、bind
-
-```javascript
-function getColor(color) {
-  this.color = color;
+// 2、对象赋值调用
+function fn() {
   console.log(this);
 }
-function Car(name, color) {
-  this.name = name; // this指的是实例car
-  getColor.call(this, color); // 这⾥的this从原本的getColor，变成了car
+var obj = { fn: fn };
+obj.fn(); // this 指向被调用的对象 obj
+
+// 3、实例化
+function CreateJsPerson(name, age) {
+  this.name = name; // 尹华芝
+  this.age = age; // 48
 }
-var car = new Car("卡⻋", "绿⾊");
-```
+var p1 = new CreateJsPerson("尹华芝", 48); // this 指向 实例化 对象 p1
 
-### 5、箭头函数时
+// 4、call、apply 改变 this 指向
+function add(c, d) {
+  return this.a + this.b + c + d;
+}
+var o = { a: 1, b: 3 };
+add.call(o, 5, 7); // 1 +3+5+7
+add.apply(o, [10, 20]); // 1+3+10+20
 
-```javascript
-// 箭头函数
-var a = {
-  myfunc: function () {
-    setTimeout(() => {
-      console.log(this); // this是a
-    }, 0);
+// 5、箭头函数 没有 this
+<button id="btn1">箭头函数this</button>;
+let btn1 = document.getElementById("btn1");
+let obj = {
+  name: "kobe",
+  age: 39,
+  getName: function () {
+    btn1.onclick = () => {
+      console.log(this); // 指向 箭头函数外层第一个普通函数的 this， obj.getName();
+    };
   },
 };
-a.myfunc();
+obj.getName();
 ```
 
-## call、apply、bind(借用方法的理念)
+### call、apply、bind(借用方法的理念)
 
 ```javascript
 func.call(thisArg, param1, param2, ...) //func是个函数, 返回func 执行的结果 ；
@@ -330,7 +309,7 @@ func.bind(thisArg, param1, param2, ...) // 返回func的拷贝，并拥有指定
 5、箭头函数没有⾃⼰的 this，需要看其外层是否有函数，**如果有，外层函数的 this 就是内部箭头函数**
 **的 this，如果没有，则 this 是 window**
 
-# 面向对象
+## 面向对象
 
 - 类：封装、多态、继承
 - 构造函数、实例、对象字面量
@@ -338,46 +317,56 @@ func.bind(thisArg, param1, param2, ...) // 返回func的拷贝，并拥有指定
 - 内置对象、宿主对象、本地对象
   > 首先 JS 中没有类，都是基于原型的。无论是 ES5/ES6 中引入的 class 只是基于原型继承模型的语法糖。
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1616575775398-f0baa651-6168-4bd4-b1ae-874b01a487d7.png#align=left&display=inline&height=378&margin=%5Bobject%20Object%5D&name=image.png&originHeight=565&originWidth=824&size=291791&status=done&style=none&width=551)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1616575775398-f0baa651-6168-4bd4-b1ae-874b01a487d7.png#align=left&display=inline&height=378&margin=%5Bobject%20Object%5D&name=image.png&originHeight=565&originWidth=824&size=291791&status=done&style=none&width=551#align=left&display=inline&height=565&margin=%5Bobject%20Object%5D&originHeight=565&originWidth=824&status=done&style=none&width=824)
 
-## 构造函数
+### 构造函数
 
 本身就是一个函数，为了规范**一般将首字母大写**，区别在于 使用 **new 生成实例的函数就是构造函数**，直接调用的就是 普通函数。
 
 ```javascript
-// 手写 new 的几个步骤
-1.创建一个新对象 Object.create()
-2.将构造函数中的作用域指向该对象
-3.执行构造函数中的代码
-4.返回新对象
+// ********** 手写 new 的几个步骤 ********** //
+// 1、创建一个新对象，
+// 2、把 构造函数的 prototype 赋值给新对象的 proto,
+// 3、把构造函数的 this 指向新对象并返回结果
+// 4、判断如果结果是对象则 返回 ，否则返回 新对象
 
+function myNew(fn, ...args) {
+  let newobj = {};
+  newobj.__proto__ = fn.prototype;
+  let resObj = fn.apply(newobj, args);
+  // 判断如果结果是对象则 返回 ，否则返回 新对象
+  return resObj instanceof Object ? resObj : newobj;
+}
+// 测试
 function Parsen() {
-  this.name = '龙哥';
-  this.age = 30;
+  this.name = "龙哥";
+  this.age = "18";
 }
-
-function NewFn(constructFunc) {
-  const newObj = Object.create(null);
-  constructFunc.call(newObj);
-  return newObj;
-}
-var monster = NewFn(Parsen)
+Parsen.prototype.getName = function () {
+  return this.name;
+};
+var parsen = myNew(Parsen);
 ```
 
-## 原型、prototype、**\*\*proto**\*\*
+### 原型和原型链
 
-- **prototype: 原型**
-- \***\*proto**: 原型链(链接点)\*\*
+#### 原型模式
 
-\*\*
+原型是在构造函数中的
+**每声明一个函数的时候：**
+浏览器会在内存中创建一个对象，对象中新增一个 `constructor`  属性，浏览器把 `constructor`  属性指向 构造函数，构造函数.prototype 赋值给对象。
 
-### 关系
+Javascript 对象从原型继承方法和属性，而`Object.prototype`在继承链的顶部。Javascript prototype 关键字还可以用于向构造函数添加新值和方法。
 
-- prototype: 函数的一个属性：对象 {}
+**原型链：**
+代码读取某个属性的时候，首先在实例中找到了则返回，如果没有找到，则继续在 实例的原型对象(**proto**)中搜索，直到找到为止。还没找到则继续 原型对象的原型对象上找。 直到最后 Object 为止，返回 null
+
+#### 关系
+
+- prototype: 函数的一个属性：是一个对象 {}
 - **proto**: 对象 Object 的一个属性：对象 {}
-- 对象的 **_proto_**  保存着该对象 构造函数的 prototype
-
-  **以上关系可以使用 console.log 去测试**
+- **每个对象实例都有一个 \_\_*****proto\_\_***  ，它指向构造函数的 prototype
+- **以上关系可以使用 console.log 去测试**
 
 ```javascript
 function Test() {
@@ -388,7 +377,7 @@ var t = new Test();
 // 因为 对象的 __proto__ 保存着该对象构造函数的 prototype 所以
 t.__proto__ === Test.prototype // true
 
-Test.prototype.__proto__ === Ojectb.prototype // true： 这样一个链式调用形成 - 原形链
+Test.prototype.__proto__ === Object.prototype // true： 这样一个链式调用形成 - 原形链
 
 Object.prototype.__proto__ // null  原形链顶层为 null
 
@@ -429,7 +418,6 @@ test.hasOwnProperty('b') // true
 test.hasOwnProperty('c') // false    是继承过来的所以没有
 
 'a' in test // true   in: 链上查找
-
 ```
 
 ### Class
@@ -519,9 +507,9 @@ class ColorPoint extends Point {
 
 当作对象：super 在普通方法中，指向 父类的原型对象 A.prototype；在静态方法中 指向父类。
 
-### 1、原型链继承
+#### 1、原型链继承
 
-**直接让子类的原型对象指向父类实例**，当子类实例找不到对应的属性和方法时，就会往它的原型对象(父类实例上找)，从而实现对父类的属性和方法的继承。
+**直接让子类的原型对象 prototype 指向父类实例**，当子类实例找不到对应的属性和方法时，就会往它的原型对象(父类实例上找)，从而实现对父类的属性和方法的继承。
 
 ```javascript
 // 父类
@@ -545,9 +533,10 @@ child.getName(); // 我是小样
 
 缺点：【**子类相互影响**】 子类实例原型都指向父类实例，因此 某个 子类实例修改了 父类引用方法或函数的时候 会影响所有子类。 **同时无法向父类构造函数传参**。
 
-### 2、构造函数继承
+#### 2、构造函数继承
 
-在子类构造函数中执行 父类构造函数并绑定子类 this, 使得 父类中的属性能够赋值到子类的 this 上。这样就 避免实例之间共享一个原型实例，又能向父类构造函数传参。
+**在子类构造函数中执行 父类构造函数并绑定子类 this**, 使得 父类中的属性能够赋值到子类的 this 上。这样就 避免实例之间共享一个原型实例，又能向父类构造函数传参。
+缺点很明显： **继承不了父类原型上的属性和方法**
 
 ```javascript
 function Parent(name) {
@@ -569,12 +558,9 @@ console.log(child2.name); // ['zhangsan']
 child2.getName(); // 报错,找不到getName(), 构造函数继承的方式 继承不到父类原型上的属性和方法
 ```
 
-缺点很明显： **继承不了父类原型上的属性和方法**
-\*\*
+#### 3、组合式继承
 
-### 3、组合式继承
-
-说白了就是 把上面两个整合在一起
+说白了就是 把上面两个整合在一起, prototype、构造函数调用父类 call
 
 ```javascript
 function Parent(name) {
@@ -600,9 +586,9 @@ child2.getName(); // 参数
 
 缺点： 每次创建子类实例都**执行了两次构造函数**【Parent.call() 和 new Parent()】,导致子类创建实例时，原型中会**存在两份相同的属性和方法**，很不优雅。
 
-### 4、寄生式组合继承【终极方案】
+#### 4、寄生式组合继承【终极方案】
 
-为了解决 组合式继承 构造函数被执行两次的问题，我们将 **指向父类实例改为指向父类原型**，去掉一次构造函数的执行。
+为了解决 组合式继承 构造函数被执行两次的问题，我们将 **指向父类实例改为指向 拷贝的父类原型**，去掉一次构造函数的执行，并且 不会相互影响。
 
 ```javascript
 主要是把原来的 ，其他都一样。
@@ -611,7 +597,7 @@ Child.prototype = new Parent() => Child.prototype = Parent.prototype
 
 但是 问题又出来了，**子类原型和父类原型都指向同一个对象，那还是会相互影响**。
 所以：给 父类原型做一个 浅拷贝
-`Child.prototype = Object.create(Parent.prototype)` 
+`Child.prototype = Object.create(Parent.prototype)`
 到这里 ES5 的所有继承都有了，**babel 对 ES6 继承的转换也是 使用了 寄生组合式继承**
 
 ```javascript
@@ -638,11 +624,14 @@ parent.getName(); // 报错, 找不到getName()
 ```
 
 > 我们回顾一下实现过程：
-> 一开始最容易想到的是**原型链继承**，通过把子类实例的原型指向父类实例来继承父类的属性和方法，但原型链继承的缺陷在于对子类实例继承的引用类型的修改会影响到所有的实例对象以及无法向父类的构造方法传参。
-> 因此我们引入了**构造函数继承**, 通过在子类构造函数中调用父类构造函数并传入子类 this 来获取父类的属性和方法，但构造函数继承也存在缺陷，构造函数继承不能继承到父类原型链上的属性和方法。
-> 所以我们综合了两种继承的优点，提出了**组合式继承**，但组合式继承也引入了新的问题，它每次创建子类实例都执行了两次父类构造方法，我们通过将子类原型指向父类实例改为子类原型指向父类原型的浅拷贝来解决这一问题，也就是最终实现 —— **寄生组合式继承**
+> 1、一开始最容易想到的是**原型链继承**，通过把子类实例的原型指向父类实例来继承父类的属性和方法，但原型链继承的缺陷在于对子类实例继承的引用类型的修改会影响到所有的实例对象以及无法向父类的构造方法传参。
+> 2、因此我们引入了**构造函数继承**, 通过在子类构造函数中调用父类构造函数并传入子类 this 来获取父类的属性和方法，但构造函数继承也存在缺陷，构造函数继承不能继承到父类原型链上的属性和方法。
+> 3、所以我们综合了两种继承的优点，提出了**组合式继承**，但组合式继承也引入了新的问题，它每次创建子类实例都执行了两次父类构造方法，我
+> 4、们通过将子类原型指向父类实例改为子类原型指向父类原型的浅拷贝来解决这一问题，也就是最终实现 —— **寄生组合式继承**
 
 ## 深拷贝 和 浅拷贝
+
+浅拷贝只复制指向某个对象的指针，而不复制对象本身，新旧对象还是共享一个内存，相互影响。
 
 ### 来源于赋值(址)
 
@@ -653,9 +642,9 @@ parent.getName(); // 报错, 找不到getName()
 
 简单来讲，浅拷贝 只解决了 **第一层问题** 基本类型值和引用类型地址
 
-- Object.assign() :
+- Object.assign() : 如果目标对象只有一层的时候 是深拷贝
 
-展开语法 Spread ...
+- 展开语法 Spread **...**
 
 ```javascript
 let a = {
@@ -696,6 +685,22 @@ console.log(b);
 思路：**浅拷贝 + 递归**，浅拷贝时 判断属性值是否是对象，是对象就进行递归操作。
 
 ```javascript
+function deep(source) {
+  let result;
+  for (let i in source) {
+    let elment = source[i];
+    if (checkType(elment) === "Object" || checkType(elment) === "Array") {
+      result[i] = deep(elment);
+    } else {
+      result[i] = elment;
+    }
+  }
+  return result;
+}
+function checkType(obj) {
+  return Object.prototype.toString().call(obj).slice(8, -1);
+}
+
 export function deepClone(source) {
   if (!source && typeof source !== "object") {
     throw new Error("error arguments", "deepClone");
@@ -714,41 +719,55 @@ export function deepClone(source) {
 
 ---
 
-# 基本概念
+## 基本概念
 
-## js 常见错误类型
+### js 常见错误类型
 
-### SyntaxError: 语法错误
+#### SyntaxError: 语法错误
 
 1、声明的变量名不符合规范：**首位**必须是 字母、下划线（\_）或美元符号（$） var 1 // SyntaxError: Unexpected number
 
 2、给关键字赋值：function = 5 、 var 1a // _Uncaught SyntaxError: Unexpected token_
 
-### TypeError 类型错误(调用不存在的方法，乱调用)
+#### TypeError 类型错误(调用不存在的方法，乱调用)
 
 1、调用不存在的方法 123() 、 var oo = {} oo.run()
 2、new 关键字后接基本类型： var a = new 123
 
-### ReferenceError 这玩意不存在
+#### ReferenceError 这玩意不存在
 
 1、调用了不存在的变量
 2、给一个无法被赋值的对象赋值：console.log("123") = 1
 
-## js 检测数据类型方法
+### js 检测数据类型方法
 
-### typeof
+#### typeof 检测基础类型
 
-只适检测基础类型， null 和引用类型、new xxx() 都返回 object
+返回一个表示数据类型的字符串。**主要检测基本类型，除了 null**
 
-### instanceof
+```javascript
+typeof Symbol() ; // symbol
+typeof new Function(); // function
+typeof null \ [] ; // object
+```
 
-语法：object instanceof constructor
-概念：测试一个对象是否在其原形链原型构造函数的属性。只有在比较自定义(自己声明的函数)的对象时才有意义。
-局限性强
+#### instanceof 引用类型
 
-### object.protype.toString() 强推
+语法：object instanceof constructor A instanceof B: **判断 A 是否是 B 的实例**
+概念：测试一个对象在其原型链中是否存在一个构造函数的 prototype 属性，但是不能检测 null 和 undefined
 
-唯一一种获取[[class]]值的方法
+```javascript
+[]  instanceof  Array;  //true
+{}  instanceof  Object;//true
+new  Date()  instanceof  Date;//true
+new  RegExp()  instanceof  RegExp//true
+null  instanceof  Null//报错
+undefined  instanceof  undefined//报错
+```
+
+#### object.protype.toString().call() 强推
+
+唯一一种获取[[class]]值的方法, 最准确最有效的方式。
 
 ```javascript
 Object.prototype.toString.call([]); // "[object Array]"
@@ -758,13 +777,16 @@ Object.prototype.toString.call(null); // "[object Null]"
 Object.prototype.toString.call(undefined); // "[object Undefined]"
 ```
 
-# 数组
+## 数组
 
-[https://coffe1891.gitbook.io/frontend-hard-mode-interview/1/1.2.9](https://coffe1891.gitbook.io/frontend-hard-mode-interview/1/1.2.9)
+### [强大的数组](https://coffe1891.gitbook.io/frontend-hard-mode-interview/1/1.2.9)
+
+你所不知道的 forEach、map、filter、find、sort、some 等易错点整理 - 简书
+[https://www.jianshu.com/p/3529866b0854](https://www.jianshu.com/p/3529866b0854)
 
 ### 数组扁平化
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1614569387820-15d922f2-4d56-4eb8-ba6a-c832412ebc85.png#align=left&display=inline&height=225&margin=%5Bobject%20Object%5D&name=image.png&originHeight=450&originWidth=1211&size=215419&status=done&style=none&width=605.5)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1614569387820-15d922f2-4d56-4eb8-ba6a-c832412ebc85.png#align=left&display=inline&height=225&margin=%5Bobject%20Object%5D&name=image.png&originHeight=450&originWidth=1211&size=215419&status=done&style=none&width=605.5#align=left&display=inline&height=450&margin=%5Bobject%20Object%5D&originHeight=450&originWidth=1211&status=done&style=none&width=1211)
 
 ```javascript
 // 数组排平 N 种解法
@@ -831,11 +853,11 @@ console.log("flatten4:::", flatten4(a));
 
 ### 数组排序
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1614571457541-29c05ab9-071f-4cb0-b17d-d5ab1718baba.png#align=left&display=inline&height=218&margin=%5Bobject%20Object%5D&name=image.png&originHeight=435&originWidth=1019&size=178474&status=done&style=none&width=509.5)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1614571457541-29c05ab9-071f-4cb0-b17d-d5ab1718baba.png#align=left&display=inline&height=218&margin=%5Bobject%20Object%5D&name=image.png&originHeight=435&originWidth=1019&size=178474&status=done&style=none&width=509.5#align=left&display=inline&height=435&margin=%5Bobject%20Object%5D&originHeight=435&originWidth=1019&status=done&style=none&width=1019)
 
 ## 防抖和节流
 
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/407340/1578199652179-0c520fe0-4509-42e9-831a-cb2490a1c461.png#align=left&display=inline&height=1061&margin=%5Bobject%20Object%5D&originHeight=268&originWidth=1920&size=0&status=done&style=none&width=7604)
+![fan](https://cdn.nlark.com/yuque/0/2020/png/407340/1578199652179-0c520fe0-4509-42e9-831a-cb2490a1c461.png#align=left&display=inline&height=1061&margin=%5Bobject%20Object%5D&originHeight=268&originWidth=1920&size=0&status=done&style=none&width=7604#align=left&display=inline&height=268&margin=%5Bobject%20Object%5D&originHeight=268&originWidth=1920&status=done&style=none&width=1920)
 
 ### 防抖：debounce
 
@@ -891,11 +913,7 @@ setInterval(ceshiFn, 10);
 **不过市面上比较全的还是 lodash 的防抖节流函数**
 \*\*
 
-# 事件
-
-## 事件流
-
-> 描述的是从也 i 按中接受事件的顺序。 IE 提出的是事件冒泡，而 Netscape 提出是事件捕获。
+## 事件
 
 ### 事件冒泡
 
@@ -917,55 +935,23 @@ setInterval(ceshiFn, 10);
 1. 实际的目标(具体元素)接受到事件
 1. 冒泡阶段对事件做出响应
 
-## 事件处理程序
-
-### HTML 事件
-
-简单讲就是 在 HTML 元素中直接定义事件，例如：
-
-```javascript
-<input type="button" onclick="showMessage()" />
-```
-
-### DOM0 级事件
-
-直接通过 js 选择器获取到指定元素，并给其属性添加一个事件，可通过 this 访问当前选择的元素属性和方法。
-
-```javascript
-var btn = document.getElmenetById("myBtn");
-// 添加事件 (冒泡阶段处理)
-btn.onclick = function () {
-  alert(this.id); // "myBtn"
-};
-// 删除事件
-btn.onclick = null;
-```
-
-### DOM2 级事件
-
-就是我们现在经常用的 **addEventListener() 、removeEventListener()**, 接受 3 个参数：
-（事件名称，事件函数，布尔值）布尔值是 true 表示在捕获阶段调用事件; false 表示在冒泡阶段调用事件。
-
-### IE 事件处理
-
-类似 DOM2 级事件，只是名字不同。 **attachEvent() 和 detachEvent()**，因为 IE 只支持冒泡阶段，所以两个参数就够了。
-
-### 跨浏览器的事件处理
-
-由于不同浏览器支持不同事件，所以要写一套兼容方案。那就是 放到统一一个函数中，自定义两个方法 addHandler() 和 removeHandler()， 先判断 是否支持 DOM2 否则 就是 IE。
-
 ## 事件对象
 
-preventDefault() 取消默认行为，只有 cancelable 属性设置为 true 的事件才可以使用。例如取消 a 标签点击跳转默认行为。
+**preventDefault**() 取消默认行为，只有 cancelable 属性设置为 true 的事件才可以使用。例如取消 a 标签点击跳转默认行为。
 
-setopPropagation() 立即取消进一步事件冒泡或捕获。一般避免触发注册在嵌套元素上注册的事件。
+**setopPropagation**() 立即取消进一步事件冒泡或捕获。一般避免触发注册在嵌套元素上注册的事件。
 
-# 事件循环 Event Loop
+## 事件循环 Event Loop
 
 [我见过最牛逼的讲解](https://www.bilibili.com/video/BV1kf4y1U7Ln/?spm_id_from=333.788.videocard.0) 必会版本
 
-> 首先 JS 是单线程语言，它的异步和多线程实现是通过 Event Loop 事件循环机制来实现的。
-> 主要由三个部分组成：调用栈 （call stack）、宏任务（Macrotask Queue）、微任务队列（Microtask Queue）
+> Event Loop 是让 JS 做到即使单线程，又绝对不会阻塞的核心机制，是 JS 并发模型的基础。用来协调各种事件、用户交互、脚本执行、UI 渲染、网络请求等的一种机制。
+
+Event Loop 是属于 JavaScript Runtime 的，是由宿主环境（比如浏览器）提供的。
+
+### 作用
+
+监控调用栈和任务队列，如果调用栈是空的，他就会取出队列中的第一个 callback 函数，然后将它压入到调用栈中，然后执行它。
 
 [详细文档](<https://github.com/staven630/blog/blob/master/%E6%B7%B1%E7%A9%B6JavaScript/%E5%BC%82%E6%AD%A5/%E5%AE%8F%E4%BB%BB%E5%8A%A1(Macrotask)%E4%B8%8E%E5%BE%AE%E4%BB%BB%E5%8A%A1(Microtask).md>)
 
@@ -1002,7 +988,7 @@ promise 的 then 可以接受两个函数，第一个 resolve ，第二个参数
 
 1、考虑 类型问题
 2、考虑 顺序问题
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1614516458033-ef2447f0-aba6-4e2b-ae52-3446624981ae.png#align=left&display=inline&height=432&margin=%5Bobject%20Object%5D&name=image.png&originHeight=528&originWidth=756&size=236768&status=done&style=none&width=618)
+![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1614516458033-ef2447f0-aba6-4e2b-ae52-3446624981ae.png#align=left&display=inline&height=432&margin=%5Bobject%20Object%5D&name=image.png&originHeight=528&originWidth=756&size=236768&status=done&style=none&width=618#align=left&display=inline&height=528&margin=%5Bobject%20Object%5D&originHeight=528&originWidth=756&status=done&style=none&width=756)
 
 ## async 和 await
 
@@ -1086,7 +1072,7 @@ CMD 规范是国内发展出来的，就像 AMD 有个`requireJS`，CMD 有个�
 - AMD 是依赖关系前置,在定义模块的时候就要声明其依赖的模块;
 - CMD 是按需加载依赖就近,只有在用到某个模块的时候再去 require：
 
-![123](https://cdn.nlark.com/yuque/0/2021/png/407340/1611910283047-8f9df805-98cf-4509-a98d-afa3122499e5.png#align=left&display=inline&height=341&margin=%5Bobject%20Object%5D&originHeight=341&originWidth=625&size=0&status=done&style=none&width=625)
+![m](https://cdn.nlark.com/yuque/0/2021/png/407340/1611910283047-8f9df805-98cf-4509-a98d-afa3122499e5.png#align=left&display=inline&height=341&margin=%5Bobject%20Object%5D&originHeight=341&originWidth=625&size=0&status=done&style=none&width=625#align=left&display=inline&height=341&margin=%5Bobject%20Object%5D&originHeight=341&originWidth=625&status=done&style=none&width=625)
 
 ### UMD
 
@@ -1101,15 +1087,14 @@ UMD 先判断是否支持 Node.js 的模块（exports）是否存在，存在则
 
 与前两者的最大区别在于，**ESModule**是由 JS 解释器实现，而后两者是 在宿主环境中运行时实现。ESModule 导入实际上是在语法层面新增了一个语句，而 AMD 和 ComminJs 加载模块实际上是调用了 require 函数。
 
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/407340/1585042881835-beedb792-8ea0-4f3f-b726-91cd431b6071.png#align=left&display=inline&height=199&margin=%5Bobject%20Object%5D&name=image.png&originHeight=397&originWidth=706&size=56918&status=done&style=none&width=353)
+![image.png](https://cdn.nlark.com/yuque/0/2020/png/407340/1585042881835-beedb792-8ea0-4f3f-b726-91cd431b6071.png#align=left&display=inline&height=199&margin=%5Bobject%20Object%5D&name=image.png&originHeight=397&originWidth=706&size=56918&status=done&style=none&width=353#align=left&display=inline&height=397&margin=%5Bobject%20Object%5D&originHeight=397&originWidth=706&status=done&style=none&width=706)
 
-# 正则表达式
+## 正则表达式
 
 > 正则表达式可以从一个基础字符串中根据一定的匹配模式替换文本中的字符串、验证表单、提取字符串等等。
 
 最全正则表达式[链接](https://github.com/ziishaned/learn-regex/blob/master/translations/README-cn.md)
-身份证号(15 位、18 位数字)：^\d{15}|\d{18}$
-手机号码：^(13[0-9])\d{8}$
+身份证号(15 位、18 位数字)：^\d{15}|\d{18}
 
 正则表达式主要依赖于元字符。
 
@@ -1124,7 +1109,7 @@ UMD 先判断是否支持 Node.js 的模块（exports）是否存在，存在则
 | {n,m}  | 匹配 num 个大括号之间的字符 (n <= num <= m).                 |
 | (xyz)  | 字符集，匹配与 xyz 完全相等的字符串.                         |
 | &#124; | 或运算符，匹配符号前或后的字符.                              |
-|   \\   | 转义字符,用于匹配一些保留的字符 `[ ] ( ) { } . \* + ? ^ $ \  |` |
+|   \\   | 转义字符,用于匹配一些保留的字符 `[ ] ( ) { } . \* + ? ^ $ \  |`|
 |   ^    | 从开始行开始匹配.                                            |
 |   $    | 从末端开始匹配.                                              |
 

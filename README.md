@@ -9,3 +9,11 @@
 - public文件夹，此文件夹主要放静态资源文件，例如favicons和 PWA的图标。
 
 ## 基本配置
+
+## 简单操作
+
+[markdown扩展](http://caibaojian.com/vuepress/guide/markdown.html)
+
+## 全局安装
+
+npm install -g vuepress
