@@ -3,6 +3,8 @@
 # 确保脚本抛出遇到的错误
 set -e
 
+vuepress build docs --no-cache # 在每次构建前删除 cache
+
 # 生成静态文件
 npm run docs:build
 

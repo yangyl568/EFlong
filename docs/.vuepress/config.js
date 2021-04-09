@@ -4,8 +4,19 @@ module.exports = {
     head: [
         ['link', {
             rel: 'icon',
-            href: 'favicon.png'
-        }]
+            href: 'favicon.ico'
+        }],
+        [
+            'script', {},
+            `var _hmt = _hmt || [];
+            (function() {
+              var hm = document.createElement("script");
+              hm.src = "https://hm.baidu.com/hm.js?ce5b5e7aef70331f91bf3366eeef2b2b";
+              var s = document.getElementsByTagName("script")[0]; 
+              s.parentNode.insertBefore(hm, s);
+            })();
+            `
+        ]
     ],
     base: '/EFlong/',
     host: '127.0.0.1',
