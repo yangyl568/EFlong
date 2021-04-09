@@ -7,7 +7,7 @@ module.exports = {
             href: 'favicon.png'
         }]
     ],
-    base: '/EFlong.github.io/',
+    base: '/EFlong/',
     host: '127.0.0.1',
     port: '8888',
     extraWatchFiles: [
@@ -31,7 +31,7 @@ module.exports = {
                 ]
             },
             {
-                text: '笔试题~',
+                text: '动动手~',
                 link: '/bibeiskill'
             },
             {
