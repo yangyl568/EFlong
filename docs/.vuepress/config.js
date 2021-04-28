@@ -1,6 +1,6 @@
 module.exports = {
     title: '逍遥生-笔记o-o',
-    description: '前端知识点、前端面试整理、前端积累',
+    description: '前端, css, javascript, vue, js, 前端面试，前端博客',
     head: [
         ['link', {
             rel: 'icon',
@@ -25,7 +25,7 @@ module.exports = {
         // '.vuepress/config.js' // 指定额外的需要被监听的文件。
     ],
     themeConfig: {
-        lastUpdated: 'Last Updated', // string | boolean
+        lastUpdated: 'Last Updated', // Last Updated | boolean
         sidebar: 'auto',
         nav: [
             {
@@ -54,13 +54,7 @@ module.exports = {
                 link: '/error'
             }
         ],
-        // sidebar: [
-        //     "/", //指的是根目录的md文件 也就是 README.md 里面的内容
-        //     "/bibeiskill", //根目录创建 mianshi.md文件
-        //     "/kuozhan", //根目录创建 kuozhan.md文件
-        //     "/error" //根目录创建 error.md文件
-        // ],
-        sidebarDepth: 2
+        sidebarDepth: 4
     },
     plugins: ['@vuepress/back-to-top', '@vuepress/nprogress']
 }

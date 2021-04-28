@@ -17,8 +17,6 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
 1. 同层全体组合选择器 **~**，选择所有跟在 article 后的同层 article 元素，**不管它们之间隔了多少其他元素**
 1. 子组合选择器 **>** 选择一个**元素的直接子元素**
 
-\*\*
-
 ## css 设计模式
 
 > 设计模式：是一套反复使用的、多数人知晓的、经过分类、代码设计经验的总结。
@@ -71,8 +69,6 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
 - content-box(默认值):  **border+padding+ width**
 - border-box(推荐用法)：**宽高是包含 border 和 padding 的，这样我们就可以准确的设计 盒子的大小**
 
-\*\*
-
 ## 块级格式化上下文
 
 ### BFC
@@ -83,7 +79,7 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
 - 具有 overflow 且值不是 visible 的块元素，
 - flex item 和 grid item
 
-**特点**
+特点
 
 - 块级盒的垂直方向距离由上下 margin 决定
 - BFC 就是页面上的**一个隔离的独立容器**，容器里面的子元素不会影响到外面的元素。反之也如此；
@@ -109,11 +105,13 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
 通过负边距进行偏移的元素，它会放弃偏移前占据的空间，这样它后面文档流中的其它元素就会“流”过来填充这部分空间。
 
 **负边距对浮动元素的影响**
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1615368567346-80ea9757-4a01-4889-8eba-b28aeeb5029e.png#align=left&display=inline&height=316&margin=%5Bobject%20Object%5D&name=image.png&originHeight=632&originWidth=751&size=64489&status=done&style=none&width=375.5)![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1615368631444-b67a5ae1-c3ee-40b3-a2c6-a7101174189f.png#align=left&display=inline&height=530&margin=%5Bobject%20Object%5D&name=image.png&originHeight=1060&originWidth=2152&size=236891&status=done&style=none&width=1076)
+![image.png](https://z3.ax1x.com/2021/04/28/giZawD.png)
+
+![image.png](https://z3.ax1x.com/2021/04/28/giZsSI.png)
 
 都是为了实现一个**两侧宽度固定，中间宽度自适应的三栏布局**。
 
-### 圣杯布局：
+### 圣杯布局
 
 ```html
 <body>
@@ -189,16 +187,13 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
     width: 200px;
     margin-left: -100%;
     background-color: #333;
-
   }
 
   .right {
     width: 200px;
     margin-left: -200px;
     background-color: #999;
-
   }
-</style>
 </style>
 
 <body>
@@ -260,9 +255,10 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
 
 ## 弹性布局 flex
 
-> 具体用法移步阮一峰的[flex 语法](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)、[flex 实战](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)，讲得非常通俗易懂.
+> 具体用法移步阮一峰的[flex 语法](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)、
+> [flex 实战](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)，讲得非常通俗易懂.
 
-### 注意点：
+### 关键点
 
 不确定多少的列表展示，**最后一行需要左对齐的时候**，解决方案：
 
@@ -324,15 +320,13 @@ flex: '组合值： flex-grow'> <'flex-shrink'> <'flex-basis 是否放大、缩�
 
 ## Sass
 
-#### 记录和介绍常用语法：
+### 记录和介绍常用语法
 
 - & 代表当前所属选择器： `&:hover {xxx}`
 - 定义 $width:5em  ：变量，后期直接使用。$width: 5em !global; 全局可用。
 - @import "foo.scss" : 导入本地 scss
 - @extend .cssname: 将.cssname**下的所有样式继承给 当前作用域**
 - **@for、@each 可以有规律的循环输出多个类元素**
-
-\*\*
 
 ### mixin 混合指令（性能比@extend 更好）
 
