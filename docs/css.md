@@ -1,21 +1,24 @@
 # css 高级
 
-> 结构性属性：
-> display、position
-> overflow、float、margin、padding
-> 表现性属性：
-> background、border、font、text
+- 结构性属性： display、position、overflow、float、margin、padding
+- 表现性属性： background、border、font、text
 
 ## css 选择器
 
-id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-child(n)](https://www.runoob.com/cssref/sel-nth-child.html)）、伪元素（:before、:after）、
-关系选择器、后代选择器、
+id、类、标签名、
 
-### 选择器：>、+和~
+伪类（:link、:visited、:hover、:active、[:nth-child(n)](https://www.runoob.com/cssref/sel-nth-child.html)）、
 
-1. 同层相邻组合选择器 **+** **选择 header 元素后紧跟的 p 元素**
-1. 同层全体组合选择器 **~**，选择所有跟在 article 后的同层 article 元素，**不管它们之间隔了多少其他元素**
-1. 子组合选择器 **>** 选择一个**元素的直接子元素**
+伪元素（:before、:after）、
+
+[关系选择器](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/Selectors/Combinators)
+
+### 关系选择器：空格、>、+和~
+
+- 后代选择器: 空格。div p, div 里的 所有 p 标签都会匹配到
+- 子代关系选择器: > 。只会在选择器选中直接子元素的时候匹配。
+- 邻接兄弟选择器: + 。紧跟的同级元素。
+- 通用兄弟: ~ 。p ~ img 所有 p 元素后 任何地方的 img 元素。
 
 ## css 设计模式
 
@@ -27,35 +30,40 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
 - 拆：分之后，还可以把重复 冗余的代码 拆出来
 - 排：经过 分、拆 之后其实就已经十分清晰了，这一步 主要是多文件引用排序问题
 
-### OOCSS- Object Oriented CSS（提供了思想）
+### OOCSS- Object Oriented CSS (提供了思想)
 
 直译过来就是，**结构和皮肤分离，容器和内容分离。**
+
 即不要把结构和皮肤以及内容进行强耦合，而是相互独立，所要达到的目标是更易复用和组合，可以选择使用，选择引用等。
 
-### SMACSS - Scalable and Modular Architecture for CSS （实战）
+### SMACSS - Scalable and Modular Architecture for CSS (实战)
 
-> 1、Base（基础）
-> 基础的样式，就是一些需要最先定义好，针对于某一类元素的通用固定样式。
-> 2、Layout（布局）
-> 布局样式，是跟页面整体结构相关，譬如，列表，主内容，侧边栏的位置、宽高、布局方式等。
-> 3、Module（模块）
-> 模块样式，就是我们在对页面进行拆的过程中，所抽取分类的模块，这类的样式分别写到一起。
-> 4、State（状态）
-> 页面中的某些元素会需要响应不同的状态，比如，可用、不可用、已用、过期、警告等等。将这类样式可以组织到一起。
-> 5、Theme（主题）
-> 主题是指版面整个的颜色、风格之类，一般网站不会有频繁的较大的改动，给我们印象比较深的是 QQ 空间，其他应用的不是很多，所以，这个一般不会用到，但有这样一个意识是好的，需要用到的时候，就知道该怎样规划。
+1. Base（基础）
+基础的样式，就是一些需要最先定义好，针对于某一类元素的通用固定样式。
+2. Layout（布局）
+布局样式，是跟页面整体结构相关，譬如，列表，主内容，侧边栏的位置、宽高、布局方式等。
+3. Module（模块）
+模块样式，就是我们在对页面进行拆的过程中，所抽取分类的模块，这类的样式分别写到一起。
+4. State（状态）
+页面中的某些元素会需要响应不同的状态，比如，可用、不可用、已用、过期、警告等等。将这类样式可以组织到一起。
+5. Theme（主题）
+主题是指版面整个的颜色、风格之类，一般网站不会有频繁的较大的改动，给我们印象比较深的是 QQ 空间，其他应用的不是很多，所以，这个一般不会用到，但有这样一个意识是好的，需要用到的时候，就知道该怎样规划。
 
 ### BEM
 
 它是一种怎样去组织、编写代码的思想，而且，看似简单的它，对前端界的影响却是巨大的。
+
 它的核心如下： **Block（块）、Element（元素）、Modifier（修饰符）**
+
 它帮助我们定义页面中每一部分的级别属性，从某种意义上说，也是一种“拆”。
 
 ## 盒模型
 
-> box-sizing 有两个常用值：content-box **标准盒模型**和 border-box **怪异盒模型**
+> box-sizing 有两个常用值：content-box **标准盒模型** 和 border-box **怪异盒模型**
 
-诞生缘由：默认盒模型实际占用空间为：
+诞生缘由
+
+默认盒模型实际占用空间为：
 `margin + border + padding + width(height)`  这种计算方式非常不方便，比如：对于非 px 为单位的宽高设置：
 
 ```css
@@ -63,7 +71,7 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
   width: 50%;
   border: 1px solid #ccc;
 }
-// 我们想要宽度为50%，但实际大小却是 50%+2px......
+/* 我们想要宽度为50%，但实际大小却是 50%+2px */
 ```
 
 - content-box(默认值):  **border+padding+ width**
@@ -75,7 +83,7 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
 
 - 浮动元素 (元素的 float 不是 none)
 - 绝对定位元素 (元素具有 position 为 absolute 或 fixed)
-- display: inline-block(内联块)、table-cell(表格单元格)、
+- display: inline-block (内联块)、table-cell (表格单元格)、
 - 具有 overflow 且值不是 visible 的块元素，
 - flex item 和 grid item
 
@@ -91,17 +99,19 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
 - 垂直方向上，行内级盒的对齐方式由 `vertical-align` 控制，默认对齐为 `baseline`；
 - 行盒的高度由内部子元素中实际高度最高的盒子计算出来，值得注意的是，行内盒（inline boxes）的垂直的 `border`，`padding` 与 `margin` 都不会撑开行盒的高度。
 
-**问题 1：**item 之间会产生水平间隙，是因为换行产生空白符。两种解决方案：
+**问题:**
+item 之间会产生水平间隙，是因为换行产生空白符。两种解决方案：
 
-- 代码不换行
-- 设置父元素 font-size 为 0，重置子元素的 font-size
+1. 代码不换行
+2. 设置父元素 font-size 为 0，重置子元素的 font-size
 
-**问题 2：**
+**问题：**
 一般为了避免这个垂直的间隙，在设置 inline-block 的时候，还需要顺手带个 `vertical-align: middle;`
 
 ## 双飞翼、圣杯、flex - 三列布局
 
 考点：margin: - 负边距
+
 通过负边距进行偏移的元素，它会放弃偏移前占据的空间，这样它后面文档流中的其它元素就会“流”过来填充这部分空间。
 
 **负边距对浮动元素的影响**
@@ -122,7 +132,7 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
   </div>
 </body>
 <style>
-  // 主设置 padding
+  /* 主设置 padding */
   .content {
     overflow: hidden;
     padding: 0 100px;
@@ -157,9 +167,9 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
 </style>
 ```
 
-1: 先写 middle,然后是 left 和 right，因为需要先渲染 middle
-2: left、right 需设置`position:relative`以及相应的 left、right 值
-3:理解负边距的作用，left 的`margin-left:-100%`使它上移一行，同时 right 向左移占据 left 原先位置，同理，right 的`margin-left:-100px`使它上移并靠右
+1. 先写 middle, 然后是 left 和 right，因为需要先渲染 middle
+2. left、right 需设置 `position:relative` 以及相应的 left、right 值
+3. 理解负边距的作用，left 的 `margin-left:-100%` 使它上移一行，同时 right 向左移占据 left 原先位置，同理，right 的`margin-left:-100px` 使它上移并靠右
 
 ### 双飞翼布局
 
@@ -255,20 +265,20 @@ id、类、标签名、伪类（:link、:visited、:hover、:active、[:nth-chil
 
 ## 弹性布局 flex
 
-> 具体用法移步阮一峰的[flex 语法](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)、
-> [flex 实战](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)，讲得非常通俗易懂.
+- 具体用法移步阮一峰的[flex 语法](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
+- [flex 实战](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)，讲得非常通俗易懂.
 
 ### 关键点
 
 不确定多少的列表展示，**最后一行需要左对齐的时候**，解决方案：
 
-flex: '组合值： flex-grow'> <'flex-shrink'> <'flex-basis 是否放大、缩小、本身大小
+flex: 组合值： flex-grow、flex-shrink、flex-basis 是否放大、缩小、本身大小
 
 ```css
-// 多列多行，最后一行 靠左正常顺序显示
+/* 多列多行，最后一行 靠左正常顺序显示 */
 .ul:after {
   content: "";
-  flex: auto; //（1，1，auto）
+  flex: auto; /* （1，1，auto） */
 }
 ```
 
@@ -289,12 +299,13 @@ flex: '组合值： flex-grow'> <'flex-shrink'> <'flex-basis 是否放大、缩�
 
 > 生成布局（flow）和绘制（paint）这两步，合称为 渲染（render）
 
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/407340/1584949820867-54c917bc-411d-4fc7-8aa7-b019df61c14b.png#align=left&display=inline&height=242&margin=%5Bobject%20Object%5D&name=image.png&originHeight=289&originWidth=624&size=40156&status=done&style=none&width=522)
+![网页生成的过程](https://s4.ax1x.com/2021/12/14/oxhAE9.png)
 
 ## 重绘 (repaint) 和重排 (reflow)
 
-**重绘**：对页面**视觉表现属性**的修改，比如：背景色、文字颜色。
-重排：修改布局必然导致重绘，比如：DOM 操作、元素大小、间距等。
+**重绘**：对页面 **视觉表现属性** 的修改，比如：背景色、文字颜色。
+
+**重排**：修改布局必然导致重绘，比如：DOM 操作、元素大小、间距等。
 
 ### 注意点
 
@@ -304,21 +315,21 @@ flex: '组合值： flex-grow'> <'flex-shrink'> <'flex-basis 是否放大、缩�
 
 ### 提高性能的技巧
 
-1、DOM 的多个读操作（或多个写操作），应该放在一起。不要两个读操作之间，加入一个写操作。
-2、不要一条条地改变样式，而要通过改变 class，或者 csstext 属性，一次性地改变样式。
-3、position 属性为 absolute 或 fixed 的元素，重排的开销会比较小，因为不用考虑它对其他元素的影响。
-4、只在必要的时候，才将元素的 display 属性为可见，因为**不可见的元素不影响重排和重绘**。另外，visibility : hidden 的元素只对重绘有影响，不影响重排。
-5、使用虚拟 DOM 的脚本库，比如 React、Vue 等。
-6、使用 window.requestAnimationFrame()、window.requestIdleCallback() 这两个方法调节重新渲染
+1. DOM 的多个读操作（或多个写操作），应该放在一起。不要两个读操作之间，加入一个写操作。
+2. 不要一条条地改变样式，而要通过改变 class，或者 csstext 属性，一次性地改变样式。
+3. position 属性为 absolute 或 fixed 的元素，重排的开销会比较小，因为不用考虑它对其他元素的影响。
+4. 只在必要的时候，才将元素的 display 属性为可见，因为**不可见的元素不影响重排和重绘**。另外，visibility : hidden 的元素只对重绘有影响，不影响重排。
+5. 使用虚拟 DOM 的脚本库，比如 React、Vue 等。
+6. 使用 window.requestAnimationFrame()、window.requestIdleCallback() 这两个方法调节重新渲染
 
 ## link 和 @import 的区别
 
 - link 属于 XHTML 标签，而 @import 是 CSS 提供的。
 - 页面被加载时，link 会同时被加载，而 @import 引用的 CSS 会等到页面被加载完再加载。
 - link 方式的样式权重高于 @import 的权重。
-- 使用 dom 控制样式时的差别：当使用 javascript 控制 dom 去改变样式的时候，只能使用 link 标签，因为@import 不是 dom 可以控制的。
+- 使用 dom 控制样式时的差别：当使用 javascript 控制 dom 去改变样式的时候，只能使用 link 标签，因为 @import 不是 dom 可以控制的。
 
-## Sass
+## Sass\less\Scss
 
 ### 记录和介绍常用语法
 
@@ -328,7 +339,7 @@ flex: '组合值： flex-grow'> <'flex-shrink'> <'flex-basis 是否放大、缩�
 - @extend .cssname: 将.cssname**下的所有样式继承给 当前作用域**
 - **@for、@each 可以有规律的循环输出多个类元素**
 
-### mixin 混合指令（性能比@extend 更好）
+### mixin 混合指令（性能比 @extend 更好）
 
 #### 定义: @mixin 后添加名称与样式
 
@@ -343,7 +354,7 @@ flex: '组合值： flex-grow'> <'flex-shrink'> <'flex-basis 是否放大、缩�
 }
 ```
 
-#### 使用@include 指令引用混合 mixin 样式
+#### 使用 @include 指令引用混合 mixin 样式
 
 ```css
 .page-title {
