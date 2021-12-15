@@ -28,7 +28,7 @@
 
 ## MVVM 框架核心原理
 
-![MVVM](https://cdn.nlark.com/yuque/0/2020/png/407340/1578199652019-f2b9078f-3dfa-4a5a-8fb9-e28ac5c5bcc0.png#align=left&display=inline&height=330&margin=%5Bobject%20Object%5D&originHeight=467&originWidth=800&size=0&status=done&style=none&width=566)
+![MVVM](https://s4.ax1x.com/2021/12/15/TpIam6.png)
 
 图上可以看到，view 通过 viewmodel 的 DOM Listeners 将事件绑定到 Model 上，而 Model 则通过 Data Bindings 来管理 View 中的数据，View-Model 从中起到一个连接桥的作用。
 
@@ -72,7 +72,7 @@ Vue 实现这种数据双向绑定的效果，需要三大模块：
 
 ### mixin
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1613659743101-710ff41b-5dad-4ecb-8305-9ab29194b415.png#align=left&display=inline&height=253&margin=%5Bobject%20Object%5D&name=image.png&originHeight=505&originWidth=911&size=164687&status=done&style=none&width=455.5)
+![mixin.png](https://s4.ax1x.com/2021/12/15/TpIBkD.png5)
 
 ### 脚手架的 使用
 
