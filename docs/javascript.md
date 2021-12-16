@@ -4,22 +4,27 @@
 
 - 常量、变量（可读、可写）、数据类型（基础、引用）
 
-symbol: 生成一个全局唯一的值，Symbol(1) !== Symbol(1)
+- symbol: 生成一个全局唯一的值，Symbol(1) !== Symbol(1)
 
 - 形参： 函数（这里定义的）、实参：实际输入的值
 - 函数四种形态：声明形态、表达式形态、嵌套形态、闭包
-- 堆: FIFO、栈: FILO 先进后出 木桶
+- 堆: FIFO、栈: FILO 先进后出(木桶原理)
 - 同步、异步、进程、线程
 
 ### 堆 heap
 
-**也被称为优先队列**，队列中允许的操作是  **先进先出**（FIFO），在队尾插入元素，在队头取出元素。
+**被称为优先队列**，队列中允许的操作是 **先进先出**（FIFO），在队尾插入元素，在队头取出元素。  
 而堆也是一样，在**堆底插入元素，在堆顶取出元素**。
 
 ### 栈 stack
 
-又名堆栈，作为一个  **先进后出** 的数据结构。（**注意：这里的堆栈本身就是栈，只是换了个抽象的名字**。）
-它是一种运算受限的线性表。其限制是仅允许在表的一端进行插入和删除运算。这一端被称为栈顶，相对地，把另一端称为栈底。向一个栈插入新元素又称作进栈、入栈或压栈，它是把新元素放到栈顶元素的上面，使之成为新的栈顶元素；从一个栈删除元素又称作出栈或退栈，它是把栈顶元素删除掉，使其相邻的元素成为新的栈顶元素。
+又名堆栈，作为一个 **先进后出** 的数据结构。（**注意：这里的堆栈本身就是栈，只是换了个抽象的名字**。）  
+
+它是一种运算受限的线性表。其限制是仅允许在表的一端进行插入和删除运算。这一端被称为栈顶，相对地，把另一端称为栈底。
+
+向一个栈插入新元素又称作进栈、入栈或压栈，它是把新元素放到栈顶元素的上面，使之成为新的栈顶元素；
+
+从一个栈删除元素又称作出栈或退栈，它是把栈顶元素删除掉，使其相邻的元素成为新的栈顶元素。
 
 ### 队列 queue
 
@@ -27,17 +32,18 @@ symbol: 生成一个全局唯一的值，Symbol(1) !== Symbol(1)
 - 采用 先进先出 FIFO ，新元素插入到尾部，读取的时候总是从头部开始。
 
 （1）**值类型(基本类型)**：数值 (number)、布尔值 (boolean)、string (在赋值传递中会以引用类型的方式来处理)、null、undefined。
+
 （2）**引用类型**：对象、数组、函数。
 
 ## 执行上下文
 
-当函数执行时，去创建一个称为「执行上下文( execution contex )」的环境，分为  **创建、执行和回收三个阶段。**
+当函数执行时，去创建一个称为「执行上下文( execution contex )」的环境，分为 **创建、执行和回收三个阶段。**
 
 **作⽤域是在函数执⾏上下⽂创建时定义好的**，不是函数执⾏时定义的
 
 ## 创建阶段
 
-是指**函数被调用但未被执行任何代码时，**创建了一个拥有 **3 个属性的对象（出现 var 变量提升、函数声明提升）**
+是指 **函数被调用但未被执行任何代码时，** 创建了一个拥有 **3 个属性的对象（出现 var 变量提升、函数声明提升）**
 
 ```javascript
 executionContext = {
@@ -51,9 +57,10 @@ executionContext = {
 
 ## 代码执行阶段
 
-主要工作：
-1、分配变量、函数的引用、赋值
-2、执行代码
+主要工作:
+
+1. 分配变量、函数的引用、赋值
+2. 执行代码
 
 ```javascript
 // ⼀段这样的代码
@@ -103,17 +110,18 @@ executionContext = {
 
 **当一个函数执行时会被压入上下文栈，内容执行完毕后，会被移出执行上下文栈。**
 
-递归函数循环次数太多的时候(超过当前浏览器分配的内存临界值)，会报错 **内存溢出**什么的，就是因为这个。函数一直没有执行完毕，一直往内存中添加直到临界点报错！
+递归函数循环次数太多的时候(超过当前浏览器分配的内存临界值)，会报错 **内存溢出** 什么的，就是因为这个。函数一直没有执行完毕，一直往内存中添加直到临界点报错！
 
 ## 基础类型和引用类型区别
 
 - 基础类型：String、Number、Boolean、Null、Undefined、symbol(ES6)
 
-**特性：**值存放在 栈 中，复制修改没有任何影响。
+**特性：** 值存放在 栈 中，复制修改没有任何影响。
 
 - 引用类型：对象、数组、函数
 
-在栈内存中实际上保存的是对象的引用地址，通过引用地址可以快速查找到堆内存中的对象。**因此赋值过程其实是指向同一个地址，会相互影响。**
+在栈内存中实际上保存的是对象的引用地址，通过引用地址可以快速查找到堆内存中的对象。
+**因此赋值过程其实是指向同一个地址，会相互影响。**
 
 ## 函数的四种形态
 
@@ -159,13 +167,17 @@ func4()(); // 闭包
 
 ## 作用域( Scope )
 
-js 中有三种：**全局作用域、函数作用域**，es6 中又增加了 **块级作用域**。
+js 中有三种：
+
+**全局作用域、函数作用域**，es6 中又增加了 **块级作用域**。
+
 作用域最大的用途就是 **隔离变量或函数**，并**控制他们的生命周期**。
 **作用域是**在函数执行上下文**创建时定义好的**，**不是**函数执行时定义的。（**执行时根据定义时的关系向外层寻找**）
 
 ### 作用域链
 
 当一个**块或函数**嵌套在另一个块或函数中时，就发生了作用域的嵌套。
+
 如果在**当前作用域无法找到会向上一级作用域寻找，直到找到或抵达全局作用域**，这样的链式关系就是 作用域链( Scope Chain )
 
 ## 闭包
@@ -227,12 +239,14 @@ for (var i = 1; i <= 5; i++) {
 ### 缺点
 
 JS 垃圾回收(GC): 如果对象不再被引用，或者对象互相引用形成孤岛后且没有被孤岛之外的其他对象引用，就会被 JS 引擎的垃圾回收器回收。
+
 **过度使用闭包，会导致内存占用过多，不会被回收，甚至内存泄漏。**
 
 ## this 的 5 种场景
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1612784671512-88b72d2f-14d3-4f58-98eb-89c44f79bf20.png#align=left&display=inline&height=408&margin=%5Bobject%20Object%5D&name=image.png&originHeight=816&originWidth=1490&size=301110&status=done&style=none&width=745#align=left&display=inline&height=816&margin=%5Bobject%20Object%5D&originHeight=816&originWidth=1490&status=done&style=none&width=1490)
-this 的值是在执行的时候才能确认，定义的时候不能确认！
+![this5.png](https://s4.ax1x.com/2021/12/15/TpZUhD.png)
+
+注意：this 的值是在执行的时候才能确认，定义的时候不能确认！
 
 ### 场景区分
 
@@ -294,7 +308,7 @@ func.bind(thisArg, param1, param2, ...) // 返回func的拷贝，并拥有指定
 > **call()、apply()、bind() 都是用来重定义 this 指向！必须是函数才可以调用** > **双 a 记忆法**：`apply`是以 a 开头，它传给`func`的参数是类 Array 对象（类数组对象）。
 
 - **call：**的参数是**直接放进去**的 `obj.myFun.call(db,param1,paramN,... )`
-- **apply：**  参数都放在一个**数组里面传进去** `obj.myFun.apply(db,[param1,param1,...])`
+- **apply：** 参数都放在一个**数组里面传进去** `obj.myFun.apply(db,[param1,param1,...])`
 - **bind：**返回是函数,需要自己再执行，它 的**参数和 call**一样
 
 **[它们的应用场景](https://coffe1891.gitbook.io/frontend-hard-mode-interview/1/1.2.4#yi-2-44-ying-yong-chang-jing)**
@@ -302,11 +316,11 @@ func.bind(thisArg, param1, param2, ...) // 返回func的拷贝，并拥有指定
 
 ## 最强总结：一字一句都是重点
 
-1、对于**直接调⽤的函数**来说，**不管函数被放在了什么地⽅**，**this 都是 window**
-2、对于**被别⼈调⽤的函数**来说，**被谁点出来的，this 就是谁**
-3、在构造函数中，类中(函数体中)出现的 this.xxx = xxx 中的 **this 是当前类的⼀个实例**
-4、call、apply 时，this 是第⼀个参数。bind 要优于 call/apply 哦，**call 参数多，apply 参数少**
-5、箭头函数没有⾃⼰的 this，需要看其外层是否有函数，**如果有，外层函数的 this 就是内部箭头函数**
+1. 对于**直接调⽤的函数**来说，**不管函数被放在了什么地⽅**，**this 都是 window**
+2. 对于**被别⼈调⽤的函数**来说，**被谁点出来的，this 就是谁**
+3. 在构造函数中，类中(函数体中)出现的 this.xxx = xxx 中的 **this 是当前类的⼀个实例**
+4. call、apply 时，this 是第⼀个参数。bind 要优于 call/apply 哦，**call 参数多，apply 参数少**
+5. 箭头函数没有⾃⼰的 this，需要看其外层是否有函数，**如果有，外层函数的 this 就是内部箭头函数**
 **的 this，如果没有，则 this 是 window**
 
 ## 面向对象
@@ -317,7 +331,7 @@ func.bind(thisArg, param1, param2, ...) // 返回func的拷贝，并拥有指定
 - 内置对象、宿主对象、本地对象
   > 首先 JS 中没有类，都是基于原型的。无论是 ES5/ES6 中引入的 class 只是基于原型继承模型的语法糖。
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1616575775398-f0baa651-6168-4bd4-b1ae-874b01a487d7.png#align=left&display=inline&height=378&margin=%5Bobject%20Object%5D&name=image.png&originHeight=565&originWidth=824&size=291791&status=done&style=none&width=551#align=left&display=inline&height=565&margin=%5Bobject%20Object%5D&originHeight=565&originWidth=824&status=done&style=none&width=824)
+![面向对象.png](https://s4.ax1x.com/2021/12/15/TpZOCF.png)
 
 ### 构造函数
 
@@ -354,7 +368,7 @@ var parsen = myNew(Parsen);
 
 原型是在构造函数中的
 **每声明一个函数的时候：**
-浏览器会在内存中创建一个对象，对象中新增一个 `constructor`  属性，浏览器把 `constructor`  属性指向 构造函数，构造函数.prototype 赋值给对象。
+浏览器会在内存中创建一个对象，对象中新增一个 `constructor` 属性，浏览器把 `constructor` 属性指向 构造函数，构造函数.prototype 赋值给对象。
 
 Javascript 对象从原型继承方法和属性，而`Object.prototype`在继承链的顶部。Javascript prototype 关键字还可以用于向构造函数添加新值和方法。
 
@@ -365,7 +379,7 @@ Javascript 对象从原型继承方法和属性，而`Object.prototype`在继承
 
 - prototype: 函数的一个属性：是一个对象 {}
 - **proto**: 对象 Object 的一个属性：对象 {}
-- **每个对象实例都有一个 \_\_*****proto\_\_***  ，它指向构造函数的 prototype
+- **每个对象实例都有一个 \_\_*****proto\_\_*** ，它指向构造函数的 prototype
 - **以上关系可以使用 console.log 去测试**
 
 ```javascript
@@ -474,10 +488,10 @@ console.log(a1.__proto__ === a2.__proto__);
 // 私有方法：通过内部使用 _xxx、_func 的方式来定义
 ```
 
-1、创建了一个 名为 User 的函数，该函数将成为类声明的结果
-2、在 User.prototype 中存储所有方法，例如 showUser ( 跟 ES5 一样把函数存到 prototype 上 )
-3、类必须使用 new ，否则无法调用类构造函数 报错
-4、类方法 是不可以枚举的
+1. 创建了一个 名为 User 的函数，该函数将成为类声明的结果
+2. 在 User.prototype 中存储所有方法，例如 showUser ( 跟 ES5 一样把函数存到 prototype 上 )
+3. 类必须使用 new ，否则无法调用类构造函数 报错
+4. 类方法 是不可以枚举的
 
 ### 继承
 
@@ -596,6 +610,7 @@ Child.prototype = new Parent() => Child.prototype = Parent.prototype
 ```
 
 但是 问题又出来了，**子类原型和父类原型都指向同一个对象，那还是会相互影响**。
+
 所以：给 父类原型做一个 浅拷贝
 `Child.prototype = Object.create(Parent.prototype)`
 到这里 ES5 的所有继承都有了，**babel 对 ES6 继承的转换也是 使用了 寄生组合式继承**
@@ -624,10 +639,11 @@ parent.getName(); // 报错, 找不到getName()
 ```
 
 > 我们回顾一下实现过程：
-> 1、一开始最容易想到的是**原型链继承**，通过把子类实例的原型指向父类实例来继承父类的属性和方法，但原型链继承的缺陷在于对子类实例继承的引用类型的修改会影响到所有的实例对象以及无法向父类的构造方法传参。
-> 2、因此我们引入了**构造函数继承**, 通过在子类构造函数中调用父类构造函数并传入子类 this 来获取父类的属性和方法，但构造函数继承也存在缺陷，构造函数继承不能继承到父类原型链上的属性和方法。
-> 3、所以我们综合了两种继承的优点，提出了**组合式继承**，但组合式继承也引入了新的问题，它每次创建子类实例都执行了两次父类构造方法，我
-> 4、们通过将子类原型指向父类实例改为子类原型指向父类原型的浅拷贝来解决这一问题，也就是最终实现 —— **寄生组合式继承**
+
+1. 一开始最容易想到的是 **原型链继承** ，通过把子类实例的原型指向父类实例来继承父类的属性和方法，但原型链继承的缺陷在于对子类实例继承的引用类型的修改会影响到所有的实例对象以及无法向父类的构造方法传参
+2. 因此我们引入了**构造函数继承**, 通过在子类构造函数中调用父类构造函数并传入子类 this 来获取父类的属性和方法，但构造函数继承也存在缺陷，构造函数继承不能继承到父类原型链上的属性和方法。
+3. 所以我们综合了两种继承的优点，提出了**组合式继承**，但组合式继承也引入了新的问题，它每次创建子类实例都执行了两次父类构造方法，我
+4. 们通过将子类原型指向父类实例改为子类原型指向父类原型的浅拷贝来解决这一问题，也就是最终实现 —— **寄生组合式继承**
 
 ## 深拷贝 和 浅拷贝
 
@@ -725,19 +741,19 @@ export function deepClone(source) {
 
 #### SyntaxError: 语法错误
 
-1、声明的变量名不符合规范：**首位**必须是 字母、下划线（\_）或美元符号（$） var 1 // SyntaxError: Unexpected number
+1. 声明的变量名不符合规范：**首位**必须是 字母、下划线（\_）或美元符号（$） var 1 // SyntaxError: Unexpected number
 
-2、给关键字赋值：function = 5 、 var 1a // _Uncaught SyntaxError: Unexpected token_
+2. 给关键字赋值：function = 5 、 var 1a // _Uncaught SyntaxError: Unexpected token_
 
 #### TypeError 类型错误(调用不存在的方法，乱调用)
 
-1、调用不存在的方法 123() 、 var oo = {} oo.run()
-2、new 关键字后接基本类型： var a = new 123
+1. 调用不存在的方法 123() 、 var oo = {} oo.run()
+2. new 关键字后接基本类型： var a = new 123
 
 #### ReferenceError 这玩意不存在
 
-1、调用了不存在的变量
-2、给一个无法被赋值的对象赋值：console.log("123") = 1
+1. 调用了不存在的变量
+2. 给一个无法被赋值的对象赋值：console.log("123") = 1
 
 ### js 检测数据类型方法
 
@@ -786,7 +802,7 @@ Object.prototype.toString.call(undefined); // "[object Undefined]"
 
 ### 数组扁平化
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1614569387820-15d922f2-4d56-4eb8-ba6a-c832412ebc85.png#align=left&display=inline&height=225&margin=%5Bobject%20Object%5D&name=image.png&originHeight=450&originWidth=1211&size=215419&status=done&style=none&width=605.5#align=left&display=inline&height=450&margin=%5Bobject%20Object%5D&originHeight=450&originWidth=1211&status=done&style=none&width=1211)
+![数组扁平化.png](https://s4.ax1x.com/2021/12/15/TpeeKA.png)
 
 ```javascript
 // 数组排平 N 种解法
@@ -853,7 +869,7 @@ console.log("flatten4:::", flatten4(a));
 
 ### 数组排序
 
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1614571457541-29c05ab9-071f-4cb0-b17d-d5ab1718baba.png#align=left&display=inline&height=218&margin=%5Bobject%20Object%5D&name=image.png&originHeight=435&originWidth=1019&size=178474&status=done&style=none&width=509.5#align=left&display=inline&height=435&margin=%5Bobject%20Object%5D&originHeight=435&originWidth=1019&status=done&style=none&width=1019)
+![数组排序.png](https://s4.ax1x.com/2021/12/15/TpeKVP.png)
 
 ## 防抖和节流
 
@@ -970,8 +986,8 @@ script 全部代码
 new Promise() 在实例化的过程中所执行的代码都是同步执行的，而 **.then、.catch 和 .finally 都是异步执行**的。
 
 1. 首先执行宏任务队列 **script**，一次只从队列中取一个任务执行，执行完后 去执行微任务队列中的任务；
-1. 微任务队列中所有的任务会被 依次取出来执行，**直到 微任务队列 microtask queue 为空**；
-1. 期间要执行 UI rendering，它的节点是在执行完所有 微任务之后，下一个宏任务之前
+2. 微任务队列中所有的任务会被 依次取出来执行，**直到 微任务队列 microtask queue 为空**；
+3. 期间要执行 UI rendering，它的节点是在执行完所有 微任务之后，下一个宏任务之前
 
 ## Promise 对象 - 手写
 
@@ -988,16 +1004,16 @@ promise 的 then 可以接受两个函数，第一个 resolve ，第二个参数
 
 1、考虑 类型问题
 2、考虑 顺序问题
-![image.png](https://cdn.nlark.com/yuque/0/2021/png/407340/1614516458033-ef2447f0-aba6-4e2b-ae52-3446624981ae.png#align=left&display=inline&height=432&margin=%5Bobject%20Object%5D&name=image.png&originHeight=528&originWidth=756&size=236768&status=done&style=none&width=618#align=left&display=inline&height=528&margin=%5Bobject%20Object%5D&originHeight=528&originWidth=756&status=done&style=none&width=756)
+![手写all.png](https://s4.ax1x.com/2021/12/15/TpeDGF.png)
 
 ## async 和 await
 
 `async`和`await`关键字让我们可以用一种更简洁的方式写出基于 `[Promise](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise)`的异步行为，而无需刻意地链式调用`promise`。
-函数返回一个 Promise 对象，如果内部发生异常则会导致返回的 Promise 对象状态变为  `reject`  状态。抛出的错误会被  `catch`  方法接收到。
+函数返回一个 Promise 对象，如果内部发生异常则会导致返回的 Promise 对象状态变为 `reject` 状态。抛出的错误会被 `catch` 方法接收到。
 
 ### async 表示函数里有异步操作
 
-`async`  函数内部 return 返回的值。会成为  `then`  方法回调函数的参数。
+`async` 函数内部 return 返回的值。会成为 `then` 方法回调函数的参数。
 
 ### await 表示紧跟在后面的表达式需要等待结果(同步)
 
@@ -1024,27 +1040,30 @@ Vue 在 3.x 版本之后改用 Proxy 进行实现
 ## 模块化编程
 
 > 为了解决两大痛点：
-> 1、每个模块都要有**自己的 变量作用域**，两个模块之间的**内部变量不会产生冲突**。
-> 2、不同模块之间保留相互 导入和导出的方式方法，**模块之间能够相互通信**，模块的执行与加载遵循一定的规范，能保证**彼此之间的依赖关系**。
+
+1. 每个模块都要有**自己的 变量作用域**，两个模块之间的**内部变量不会产生冲突**。
+2. 不同模块之间保留相互 导入和导出的方式方法，**模块之间能够相互通信**，模块的执行与加载遵循一定的规范，能保证**彼此之间的依赖关系**。
 
 **模块化开发的 4 个好处：**
 
 1. 避免变量污染，命名冲突
-1. 提高代码复用率
-1. 提高 维护性·
-1. 方便管理依赖关系
+2. 提高代码复用率
+3. 提高 维护性·
+4. 方便管理依赖关系
 
 ### CommonJS
 
 > 是服务器端模块的规范，Node.js 采用了这个规范。
 
-每个 JS 文件就是一个模块( module )，每个模块内部使用 `require`  函数和 `module.exports`  对象来对模块进行导入和导出。
+每个 JS 文件就是一个模块( module )，每个模块内部使用 `require` 函数和 `module.exports` 对象来对模块进行导入和导出。
 
 ### AMD 异步模块定义 - 专为浏览器设计
 
 > 适合 web 开发的模块化规范
 
-模块文件中，我们使用 define 函数定义一个模块，在回调函数中接受定义组件内容。这个回调函数接受一个 require 方法，能够在组件内部加载其他模块，这里我们分别传入 模块 ID,就能加载对应文件内的 AMD 模块。
+模块文件中，我们使用 define 函数定义一个模块，在回调函数中接受定义组件内容。
+
+这个回调函数接受一个 require 方法，能够在组件内部加载其他模块，这里我们分别传入 模块 ID,就能加载对应文件内的 AMD 模块。
 
 ```javascript
 // moduleA.js
@@ -1072,7 +1091,7 @@ CMD 规范是国内发展出来的，就像 AMD 有个`requireJS`，CMD 有个�
 - AMD 是依赖关系前置,在定义模块的时候就要声明其依赖的模块;
 - CMD 是按需加载依赖就近,只有在用到某个模块的时候再去 require：
 
-![m](https://cdn.nlark.com/yuque/0/2021/png/407340/1611910283047-8f9df805-98cf-4509-a98d-afa3122499e5.png#align=left&display=inline&height=341&margin=%5Bobject%20Object%5D&originHeight=341&originWidth=625&size=0&status=done&style=none&width=625#align=left&display=inline&height=341&margin=%5Bobject%20Object%5D&originHeight=341&originWidth=625&status=done&style=none&width=625)
+![cmd](https://s4.ax1x.com/2021/12/15/TpeRVx.png)
 
 ### UMD
 
@@ -1087,7 +1106,7 @@ UMD 先判断是否支持 Node.js 的模块（exports）是否存在，存在则
 
 与前两者的最大区别在于，**ESModule**是由 JS 解释器实现，而后两者是 在宿主环境中运行时实现。ESModule 导入实际上是在语法层面新增了一个语句，而 AMD 和 ComminJs 加载模块实际上是调用了 require 函数。
 
-![image.png](https://cdn.nlark.com/yuque/0/2020/png/407340/1585042881835-beedb792-8ea0-4f3f-b726-91cd431b6071.png#align=left&display=inline&height=199&margin=%5Bobject%20Object%5D&name=image.png&originHeight=397&originWidth=706&size=56918&status=done&style=none&width=353#align=left&display=inline&height=397&margin=%5Bobject%20Object%5D&originHeight=397&originWidth=706&status=done&style=none&width=706)
+![模块化ES6.png](https://s4.ax1x.com/2021/12/15/TpebqI.png)
 
 ## 正则表达式
 
