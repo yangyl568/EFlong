@@ -1,4 +1,4 @@
-# css 高级
+# CSS 中高级
 
 - 结构性属性： display、position、overflow、float、margin、padding
 - 表现性属性： background、border、font、text
@@ -9,16 +9,30 @@ id、类、标签名、
 
 伪类（:link、:visited、:hover、:active、[:nth-child(n)](https://www.runoob.com/cssref/sel-nth-child.html)）、
 
-伪元素（:before、:after）、
+伪元素（::before、::after）
 
 [关系选择器](https://developer.mozilla.org/zh-CN/docs/Learn/CSS/Building_blocks/Selectors/Combinators)
 
-### 关系选择器：空格、>、+和~
+### 关系选择器：空格、>、+ 和 ~
 
 - 后代选择器: 空格。div p, div 里的 所有 p 标签都会匹配到
 - 子代关系选择器: > 。只会在选择器选中直接子元素的时候匹配。
 - 邻接兄弟选择器: + 。紧跟的同级元素。
 - 通用兄弟: ~ 。p ~ img 所有 p 元素后 任何地方的 img 元素。
+
+### 权重、优先级
+
+```js
+权重计算规则
+
+第一优先级：!important会覆盖页面内任何位置的元素样式
+1.内联样式，如style="color: green"，权值为 1000
+2.ID选择器，如#app，权值为 0100
+3.类、伪类、属性选择器，如 .foo, :first-child, div[class="foo"]，权值为 0010
+4.标签、伪元素选择器，如div::first-line，权值为 0001
+5.通配符、子类选择器、兄弟选择器，如*, >, +，权值为 0000
+6.继承的样式没有权值
+```
 
 ## css 设计模式
 
@@ -99,13 +113,15 @@ id、类、标签名、
 - 垂直方向上，行内级盒的对齐方式由 `vertical-align` 控制，默认对齐为 `baseline`；
 - 行盒的高度由内部子元素中实际高度最高的盒子计算出来，值得注意的是，行内盒（inline boxes）的垂直的 `border`，`padding` 与 `margin` 都不会撑开行盒的高度。
 
-**问题:**
-item 之间会产生水平间隙，是因为换行产生空白符。两种解决方案：
+### 问题 1
+
+item 之间会产生水平间隙，是因为换行产生空白符。有两种解决方案：
 
 1. 代码不换行
 2. 设置父元素 font-size 为 0，重置子元素的 font-size
 
-**问题：**
+### 问题 2
+
 一般为了避免这个垂直的间隙，在设置 inline-block 的时候，还需要顺手带个 `vertical-align: middle;`
 
 ## 双飞翼、圣杯、flex - 三列布局
@@ -119,7 +135,7 @@ item 之间会产生水平间隙，是因为换行产生空白符。两种解决
 
 ![image.png](https://z3.ax1x.com/2021/04/28/giZsSI.png)
 
-都是为了实现一个**两侧宽度固定，中间宽度自适应的三栏布局**。
+都是为了实现一个 **两侧宽度固定，中间宽度自适应的三栏布局**。
 
 ### 圣杯布局
 
@@ -263,9 +279,9 @@ item 之间会产生水平间隙，是因为换行产生空白符。两种解决
 </body>
 ```
 
-## 弹性布局 flex
+## 弹性布局 flex (重点必考)
 
-- 具体用法移步阮一峰的[flex 语法](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
+- 详细用法移步阮一峰的[flex 语法](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
 - [flex 实战](http://www.ruanyifeng.com/blog/2015/07/flex-examples.html)，讲得非常通俗易懂.
 
 ### 关键点
@@ -282,7 +298,7 @@ flex: 组合值： flex-grow、flex-shrink、flex-basis 是否放大、缩小、
 }
 ```
 
-- flex: initial； 0 1 auto => 又剩余空间的尺寸时-不会放大、会缩小、自适应本身内容 fit-content
+- flex: initial； 0 1 auto; => 又剩余空间的尺寸时-不会放大、会缩小、自适应本身内容 fit-content
 - flex: auto ; 1 1 auto =>
 - flex: 1; 1 1 0%
 - flex: none; 0 0 auto
@@ -341,7 +357,7 @@ flex: 组合值： flex-grow、flex-shrink、flex-basis 是否放大、缩小、
 
 ### mixin 混合指令（性能比 @extend 更好）
 
-#### 定义: @mixin 后添加名称与样式
+- 定义: @mixin 后添加名称与样式
 
 ```css
 @mixin large-text {
@@ -354,7 +370,7 @@ flex: 组合值： flex-grow、flex-shrink、flex-basis 是否放大、缩小、
 }
 ```
 
-#### 使用 @include 指令引用混合 mixin 样式
+- 使用 @include 指令引用混合 mixin 样式
 
 ```css
 .page-title {
