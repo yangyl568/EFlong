@@ -36,19 +36,20 @@
 
 ## vs code 配合 eslint
 
-参考方案: https://zhuanlan.zhihu.com/p/421867479
+参考方案: [点击查看](https://zhuanlan.zhihu.com/p/421867479)
 
-Vue2.0 项目配置 ESLint https://www.jianshu.com/p/bfc13fb6c6ed
+Vue2.0 项目配置 ESLint [点击查看](https://www.jianshu.com/p/bfc13fb6c6ed)
 
-Vite vue3 EsLint https://www.jianshu.com/p/4b94540dd998
+Vite vue3 EsLint [点击查看](https://www.jianshu.com/p/4b94540dd998)
+
 ## try catch 兜底
 
 任何你感觉可能会出现问题的地方都可以使用 tray catch 包起来给你兜底
 
 ```js
 try {
-  alert('把代码放到这里')
-  alert('如果某个代码报错了');
+  alert("把代码放到这里");
+  alert("如果某个代码报错了");
   alert("这里是异常后的语句"); // 发生异常，所以不会执行到这里
 } catch (error) {
   alert("发生异常了，来到我这里了");
@@ -57,8 +58,8 @@ try {
 
 ```js
 try {
-  alert('把代码放到这里')
-  alert('如果某个代码报错了');
+  alert("把代码放到这里");
+  alert("如果某个代码报错了");
   alert("这里是异常后的语句"); // 发生异常，所以不会执行到这里
 } catch (error) {
   alert("发生异常了，来到我这里了");

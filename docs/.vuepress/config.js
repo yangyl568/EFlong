@@ -1,6 +1,6 @@
 module.exports = {
     title: '逍遥生-笔记o-o',
-    description: '前端, css, javascript, vue, js, 前端面试，前端博客',
+    description: '前端面试 前端面试题 css javascript vue js 前端博客',
     head: [
         ['link', {
             rel: 'icon',
@@ -32,23 +32,35 @@ module.exports = {
                 text: '首页', link: '/'
             },
             {
-                text: '前端知识点',
-                items: [
-                    { text: 'css 关键', link: '/css' },
-                    { text: 'javascript', link: '/javascript' },
-                    { text: '前端工程化', link: '/engineering' },
-                    { text: '框架', link: '/frame' },
-                    { text: 'Node', link: '/node' },
-                ]
+                text: 'CSS 必备知识点', link: '/css'
             },
             {
-                text: '动动手~',
+                text: 'javascript', link: '/javascript'
+            },
+            {
+                text: '前端工程化', link: '/engineering'
+            },
+            {
+                text: '前端框架', link: '/frame'
+            },
+            // {
+            //     text: '前端知识点',
+            //     items: [
+            //         { text: 'CSS 必备知识点', link: '/css' },
+            //         { text: 'javascript', link: '/javascript' },
+            //         { text: '前端工程化', link: '/engineering' },
+            //         { text: '框架', link: '/frame' },
+            //         { text: 'Node', link: '/node' },
+            //     ]
+            // },
+            {
+                text: '动动手',
                 link: '/bibeiskill'
             },
-            {
-                text: '扩展',
-                link: '/kuozhan'
-            },
+            // {
+            //     text: '扩展',
+            //     link: '/kuozhan'
+            // },
             {
                 text: '问题收集',
                 link: '/error'
