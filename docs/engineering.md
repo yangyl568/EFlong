@@ -14,7 +14,7 @@
 
 - 限制有 5M , 不同浏览器可能不同。
 - 同源窗口（协议、域名、端口一致），不同页面可以共享 localStorage 值
-- 通常说 sessionStorage 关闭页面即消失，但是通过跳转的页面可以共享 sessionStorage 值
+- *sessionStorage 关闭页面即消失，但是通过跳转的页面可以共享 sessionStorage 值*
 
 ## HTTP、HTTPS、HTTP/2
 
