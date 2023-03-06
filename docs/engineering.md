@@ -294,24 +294,19 @@ HMR 的核心就是客户端从服务端拉去更新后的文件，准确的说�
 
 ## Git 操作与管理
 
-### post-merge
-
-在多人协作的过程中，我们并不知道别人是否有在 package.json 中更改包管理。
-
-如果你需要在 `git pull` 的时候自动执行 `npm install` 的话，就可以使用这段代码。
-
-首先在命令行中执行 `chmod +x post-merge`，让 post-merge 变成可执行文件，然后将这个文件放入 .git/hooks 中，这样下次在执行 `git pull` 的时候就会自动安装。
-
 ### 常用命令
 
-- git checkout aaa: 切换 aaa 分支
-- git merge aaa :把 aaa 分支的代码合并到 当前分支
-- 超好用：git stash: 暂存当前修改的文件到， git stash pop: 取出暂存的文件并删除暂存记录，git stash apply: 取出 但是不删除记录
-- git pull 、 git push -u origin aaa
+- 切换 aaa 分支 `git checkout aaa`
+- 把 aaa 分支的代码合并到 当前分支 `git merge aaa`
+- 超好用：
+  - `git stash`: 暂存当前修改的文件到
+  - `git stash pop`: 取出暂存的文件并删除暂存记录
+  - `git stash apply`: 取出 但是不删除记录
+- `git pull 、 git push -u origin aaa`
 - `git merge --abort`将会抛弃合并过程并且尝试重建合并前的状态。但是，当合并开始时如果存在未 commit 的文件，`git merge --abort`在某些情况下将无法重现合并前的状态。
-- 删除本地分支： git branch -d aaaa
-- 如果删除不了可以强制删除，git branch -D aaaa
-- 有必要的情况下，删除远程分支**(慎用)**：git push origin --deleteaaaa
+- 删除本地分支： `git branch -d aaaa`
+- 如果删除不了可以强制删除，`git branch -D aaaa`
+- 有必要的情况下，删除远程分支 **(慎用)**：`git push origin --delete aaaa`
 
 ### git-flow 工作流 [链接](https://segmentfault.com/a/1190000021929465)
 
@@ -321,6 +316,10 @@ HMR 的核心就是客户端从服务端拉去更新后的文件，准确的说�
 ### git-cz 提交规范 [链接](http://note.youdao.com/noteshare?id=ea8185cbae21a6ce91775c8831de0cc8)
 
 **目的：** 统一团队 Git commit 文本标准，便于后续代码 review 和团队协作；
+
+Git 流程规范配置
+
+<!-- ![git流程规范配置.png](./../docs/public/imgs/peitu/git%20%E6%B5%81%E7%A8%8B%E8%A7%84%E8%8C%83.png) -->
 
 ## 服务
 
