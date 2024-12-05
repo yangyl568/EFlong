@@ -17,3 +17,5 @@
 ## 全局安装
 
 npm install -g vuepress
+
+[表情包地址](https://github.com/ikatyang/emoji-cheat-sheet)

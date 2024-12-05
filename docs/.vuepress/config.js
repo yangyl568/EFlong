@@ -1,5 +1,5 @@
 module.exports = {
-    title: '逍遥生-笔记o-o',
+    title: '逍遥生-前端笔记',
     description: '前端面试 前端面试题 css javascript vue js 前端博客',
     head: [
         ['link', {
@@ -64,7 +64,11 @@ module.exports = {
             {
                 text: '问题收集',
                 link: '/error'
-            }
+            },
+            {
+                text: 'Vue3项目',
+                link: '/vue3'
+            },
         ],
         sidebarDepth: 4
     },
