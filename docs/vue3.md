@@ -375,6 +375,8 @@ export class PrismaService extends PrismaClient implements OnModuleInit, OnModul
 
 4.1 生成模块和服务：
 
+> 为了快速创建内置 validation 的 CRUD 控制器，你可以使用 CLI 的 增删改查生成器：nest g resource [name]。
+
 ```bash
 nest g module todo
 nest g service todo
@@ -467,6 +469,8 @@ import { PrismaService } from './prisma/prisma.service';
 export class AppModule {}
 
 ```
+
+![配置module](./public/vue3/nestjs-Module.png)
 
 ### 7. 配置 main.ts
 
